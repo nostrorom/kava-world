@@ -27,6 +27,7 @@
     },
     "type": "module",
     "dependencies": {
+        "@sveltejs/kit": "next",
         "@fontsource/fira-mono": "^4.5.0",
         "@fontsource/mulish": "^4.5.1",
         "@fontsource/poor-story": "^4.5.0",
