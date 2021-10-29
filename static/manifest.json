@@ -1,0 +1,30 @@
+{
+    "name": "Kava World",
+    "short-name": "Kava World",
+    "description": "the ultimate platform for kava lovers",
+    "start_url": "/",
+    "scope": ".",
+    "background_color": "#FF5F00",
+    "theme_color": "#FF5F00",
+    "display": "fullscreen",
+    "orientation": "portrait",
+    "dir": "ltr",
+    "lang": "en",
+    "icons": [
+		{
+			"src": "/logos/kwlogo_36.png",
+			"sizes": "36x36",
+			"type": "image/png"
+		},
+		{
+			"src": "/logos/kwlogo_192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/logos/kwlogo_512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+    ]
+}
