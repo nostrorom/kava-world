@@ -1,7 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import Button from '$lib/UI/Button.svelte';
-	import logo from '/logo-stacked.png';
+	import logo from '../../static//logo-stacked.svg';
 	import { user } from '../stores/user';
 	import Icon from './UI/Icon.svelte';
 </script>
