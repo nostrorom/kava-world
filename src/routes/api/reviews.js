@@ -4,7 +4,7 @@ export const get = async () => {
 
     if (reviews.length === 0) {
         try {
-            const res = await fetch('https://kava-world-api.herokuapp.com/reviews');
+            const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/reviews');
             const data = await res.json();
             reviews = data;
 

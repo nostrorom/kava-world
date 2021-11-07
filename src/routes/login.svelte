@@ -1,11 +1,11 @@
 <script>
 	import { onMount } from 'svelte';
 	import { slide, fade } from 'svelte/transition';
-	import Button from '$lib/UI/Button.svelte';
-	import Icon from '$lib/UI/Icon.svelte';
-	import Spinner from '$lib/UI/Spinner.svelte';
-	import { user, visitor, user_data } from '../stores/user';
-    import { goto } from '$app/navigation';
+	import Button from '$lib/components/UI/Button.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
+	import Spinner from '$lib/components/UI/Spinner.svelte';
+	import { user, visitor, user_data } from '$lib/stores/user';
+	import { goto } from '$app/navigation';
 
 	const URL = 'https://kava-world-api.herokuapp.com/';
 
@@ -28,12 +28,12 @@
 
 	const formLogin = () => {
 		clearMessages();
-    formType = 'login';
+		formType = 'login';
 	};
 
 	const formSignup = () => {
 		clearMessages();
-    formType = 'signup';
+		formType = 'signup';
 	};
 
 	// Show & hide passwords
@@ -41,6 +41,8 @@
 	// const select = () => {
 	// 	confirmPasswordInput = document.getElementById('confirmPassword');
 	// };
+
+	$: console.log('🤣', passwordInput);
 
 	$: if (typeof window !== 'undefined') {
 		passwordInput = document.getElementById('password');
@@ -96,9 +98,9 @@
 		success = '';
 	};
 
-    const logout = () => {
-        user.set({})
-    }
+	const logout = () => {
+		user.set({});
+	};
 
 	// Server requests
 
@@ -222,17 +224,22 @@
 </script>
 
 <div class="w-full py-6 flex justify-center text-white">
-    
-    <div
-		class="w-5/6 px-8 md:w-4/6 lg:w-1/2 max-w-96 py-12 text-center space-y-12"
-	>
+	<div class="w-5/6 px-8 md:w-4/6 lg:w-1/2 max-w-96 py-12 text-center space-y-12">
 		{#if $user.username === undefined}
 			<!-- {#if $user === undefined} -->
-			<div class="flex flex-row items-center  cursor-pointer text-org-800" >
-				<h2 class="cursor-pointer h-full flex p-2 py-6 justify-center items-center w-1/2  text-2xl hover:bg-org-600 hover:text-white" class:text-white={formType === 'login'} on:click={formLogin}>
+			<div class="flex flex-row items-center  cursor-pointer text-org-800">
+				<h2
+					class="cursor-pointer h-full flex p-2 py-6 justify-center items-center w-1/2  text-2xl hover:bg-org-600 hover:text-white"
+					class:text-white={formType === 'login'}
+					on:click={formLogin}
+				>
 					Log in
 				</h2>
-				<h2 class="cursor-pointer h-full flex p-2 py-6 justify-center items-center w-1/2  text-2xl hover:bg-org-600 hover:text-white" class:text-white={formType === 'signup'} on:click={formSignup}>
+				<h2
+					class="cursor-pointer h-full flex p-2 py-6 justify-center items-center w-1/2  text-2xl hover:bg-org-600 hover:text-white"
+					class:text-white={formType === 'signup'}
+					on:click={formSignup}
+				>
 					Sign up
 				</h2>
 			</div>
@@ -281,8 +288,8 @@
 							id="email"
 							type="text"
 							autocomplete="email"
-                            placeholder="email"
-                            required
+							placeholder="email"
+							required
 							class="w-full px-4 py-2 border-1 text-center placeholder-white placeholder-opacity-60 rounded-md bg-org-600 focus:outline-none"
 						/>
 						{#if errors.email !== ''}
@@ -301,7 +308,7 @@
 						<div class="relative">
 							{#if $visitor.password !== ''}
 								<div
-									class="absolute flex justify-center  opacity-30 hover:opacity-100 inset-y-0 right-0 px-2"
+									class="absolute w-10 justify-center opacity-30 hover:opacity-100 inset-y-0 right-0 px-2"
 									on:mouseenter={showPassword}
 									on:mouseleave={hidePassword}
 									transition:slide={{ delay: 300 }}
@@ -340,7 +347,7 @@
 							<div class="relative">
 								{#if $visitor.confirmPassword !== ''}
 									<div
-										class="absolute flex justify-center  opacity-30 hover:opacity-100 inset-y-0 right-0 px-2"
+										class="absolute w-10 flex justify-center  opacity-30 hover:opacity-100 inset-y-0 right-0 px-2"
 										on:mouseenter={showConfirmPassword}
 										on:mouseleave={hideConfirmPassword}
 										transition:slide={{ delay: 300 }}
@@ -354,7 +361,7 @@
 									on:keypress={clearMessages}
 									id="confirmPassword"
 									type="password"
-    								placeholder="confirm password"
+									placeholder="confirm password"
 									required
 									class="w-full px-4 py-2 border-1 text-center placeholder-white placeholder-opacity-60 rounded-md bg-org-600 focus:outline-none"
 								/>
@@ -370,7 +377,7 @@
 						</div>
 					{:else}
 						<div transition:slide class="pt-6">
-							<div on:click|preventDefault={login} >
+							<div on:click|preventDefault={login}>
 								<Button icon="user">Log in</Button>
 							</div>
 						</div>
@@ -396,9 +403,7 @@
 
 			<div class="space-y-6">
 				{#if formType === 'login'}
-					<h2 class="cursor-pointer" on:click={toggleReset}>
-						Forgot password ?
-					</h2>
+					<h2 class="cursor-pointer" on:click={toggleReset}>Forgot password ?</h2>
 
 					{#if showResetPassword}
 						<div transition:slide class="space-y-6">
@@ -443,9 +448,7 @@
 				{$user.username}
 				!
 			</h2>
-            <Button on:click={logout} icon="close">
-                Log out
-            </Button>
+			<Button on:click={logout} icon="close">Log out</Button>
 		{/if}
 	</div>
 </div>

@@ -1,6 +1,6 @@
 <script>
-	import Options from '$lib/UI/Options.svelte';
-	import Rating from '$lib/UI/Rating.svelte';
+	import Options from '$lib/components/UI/Options.svelte';
+	import Rating from '$lib/components/UI/Rating.svelte';
 	import { slide, fade } from 'svelte/transition';
 	import { selectedID, reviewedNakamals } from '../stores/nakamals';
 

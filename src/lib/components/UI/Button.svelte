@@ -1,6 +1,6 @@
 <script>
-	import Icon from '$lib/UI/Icon.svelte';
-	import Spinner from '$lib/UI/Spinner.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
+	import Spinner from '$lib/components/UI/Spinner.svelte';
 
 	// export let icon;
 	// export let iconSize = '5';

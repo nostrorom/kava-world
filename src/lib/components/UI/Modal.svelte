@@ -1,7 +1,7 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import Button from '$lib/UI/Button.svelte';
-	import Icon from '$lib/UI/Icon.svelte';
+	import Button from '$lib/components/UI/Button.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
 	import { scale, fade } from 'svelte/transition';
 
 	const dispatch = createEventDispatcher();
@@ -21,7 +21,7 @@
 	class="fixed inset-t-10 inset-x-5 md:w-3/4 lg:w-1/2 wl:w-1/3 md:mx-auto bg-gradient-to-tr from-gry-300 to-white z-30 rounded-br-3xl rounded-tl-3xl"
 >
 	<div
-		class="absolute top-0 right-0 z-40 w-1/4 h-12 md:w-1/6 rounded-bl-xl overflow-hidden bg-org-600"
+		class="absolute top-0 right-0 z-40 w-1/4 h-12 md:w-1/6 rounded-bl-xl overflow-hidden bg-org-500"
 	>
 		<Button on:click={toggle}>
 			<div class="h-5">

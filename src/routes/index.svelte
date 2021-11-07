@@ -25,13 +25,13 @@
 		fetchedReviews,
 		selectedNakamal,
 		filteredNakamals
-	} from '../stores/nakamals';
-	import Button from '$lib/UI/Button.svelte';
-	import Modal from '$lib/UI/Modal.svelte';
-	import Nakamal from '$lib/Nakamal.svelte';
-	import Filters from '$lib/Filters.svelte';
+	} from '$lib/stores/nakamals';
+	import Button from '$lib/components/UI/Button.svelte';
+	import Modal from '$lib/components/UI/Modal.svelte';
+	import Nakamal from '$lib/components/Nakamal.svelte';
+	import Filters from '$lib/components/Filters.svelte';
 
-	import GoogleMap from '$lib/GoogleMap.svelte';
+	import GoogleMap from '$lib/components/GoogleMap.svelte';
 
 	export let data;
 

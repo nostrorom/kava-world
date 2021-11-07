@@ -1,9 +1,9 @@
 <script>
 	import { goto } from '$app/navigation';
-	import Button from '$lib/UI/Button.svelte';
-	import logo from '../../static//logo-stacked.svg';
-	import { user } from '../stores/user';
-	import Icon from './UI/Icon.svelte';
+	import Button from '$lib/components/UI/Button.svelte';
+	import logo from '/logo-stacked.svg';
+	import { user } from '$lib/stores/user';
+	import Icon from '$lib/components/UI/Icon.svelte';
 </script>
 
 <header class="flex w-full h-full py-1 justify-between items-center">

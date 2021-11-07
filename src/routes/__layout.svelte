@@ -1,6 +1,6 @@
 <script>
-	import Header from '$lib/Header.svelte';
-	import Sidebar from '$lib/Sidebar.svelte';
+	import Header from '$lib/components/Header.svelte';
+	import Sidebar from '$lib/components/Sidebar.svelte';
 	import '../app.postcss';
 	import '@fontsource/poor-story';
 	import '@fontsource/mulish';

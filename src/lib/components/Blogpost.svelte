@@ -1,5 +1,5 @@
 <script>
-	import Icon from '$lib/UI/Icon.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
 
 	export let post = {
 		_id: '',

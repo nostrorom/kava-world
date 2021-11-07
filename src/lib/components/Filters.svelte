@@ -1,8 +1,8 @@
 <script>
-	import Accordion from '$lib/UI/Accordion.svelte';
-	import Icon from '$lib/UI/Icon.svelte';
+	import Accordion from '$lib/components/UI/Accordion.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
 	import { slide } from 'svelte/transition';
-	import { fetchedNakamals, filterBy, filteredNakamals } from '../stores/nakamals';
+	import { fetchedNakamals, filterBy, filteredNakamals } from '$lib/stores/nakamals';
 
 	// Filtering by country
 

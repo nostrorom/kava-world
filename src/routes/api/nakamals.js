@@ -4,7 +4,7 @@ export const get = async () => {
 
     if (nakamals.length === 0) {
         try {
-            const res = await fetch('https://kava-world-api.herokuapp.com/nakamals');
+            const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/nakamals');
             const data = await res.json();
             nakamals = data;
 

@@ -1,9 +1,9 @@
 <script>
-	import Options from '$lib/UI/Options.svelte';
-	import Rating from '$lib/UI/Rating.svelte';
-	import Icon from '$lib/UI/Icon.svelte';
+	import Options from '$lib/components/UI/Options.svelte';
+	import Rating from '$lib/components/UI/Rating.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
 	// import { slide, fade } from 'svelte/transition';
-	import { selectedID } from '../stores/nakamals';
+	import { selectedID } from '$lib/stores/nakamals';
 	import { createEventDispatcher } from 'svelte';
 
 	const dispatch = createEventDispatcher();

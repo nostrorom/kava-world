@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/stores';
-	import Icon from '$lib/UI/Icon.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
 	// import Button from '$lib/UI/Button.svelte';
 </script>
 

@@ -1,7 +1,8 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import Button from '$lib/UI/Button.svelte';
-	import Spinner from '$lib/UI/Spinner.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
+	import Button from '$lib/components/UI/Button.svelte';
+	import Spinner from '$lib/components/UI/Spinner.svelte';
 	import { Loader } from '@googlemaps/js-api-loader';
 
 	const dispatch = createEventDispatcher();
@@ -17,8 +18,7 @@
 		selectedID,
 		selectedNakamal,
 		locateUser
-	} from '../stores/nakamals';
-	import Icon from './UI/Icon.svelte';
+	} from '$lib/stores/nakamals';
 
 	export let mapDiv;
 
