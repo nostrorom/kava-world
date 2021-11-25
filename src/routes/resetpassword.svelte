@@ -6,9 +6,9 @@
 	import Spinner from '$lib/components/UI/Spinner.svelte';
 	import { goto } from '$app/navigation';
 
-	import { user, visitor } from '../stores/user.js';
+	import { user, visitor } from '$lib/stores/user.js';
 
-	const URL = 'https://kava-world-api.herokuapp.com/';
+	const URL = 'https://nosdev-api.herokuapp.com/kavaworld/';
 
 	let passwordInput;
 	let confirmPasswordInput;
