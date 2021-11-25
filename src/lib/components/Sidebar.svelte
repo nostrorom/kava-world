@@ -1,7 +1,6 @@
 <script>
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/UI/Icon.svelte';
-	// import Button from '$lib/UI/Button.svelte';
 </script>
 
 <div class="flex flex-col justify-between h-full w-16 md:w-1/5">
@@ -33,7 +32,7 @@
 					</div>
 				</a>
 			</li>
-			<li>
+			<!-- <li>
 				<a sveltekit:prefetch href="/producers">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
@@ -45,9 +44,22 @@
 						<p class="hidden md:flex text-base lg:text-lg md:col-span-2">Producers</p>
 					</div>
 				</a>
+			</li> -->
+			<li>
+				<a sveltekit:prefetch href="/users">
+					<div
+						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
+						class:text-white={$page.path === '/users'}
+					>
+						<div class="h-6 lg:h-7 flex items-center justify-center">
+							<Icon icon="users" />
+						</div>
+						<p class="hidden md:flex text-base lg:text-lg md:col-span-2">Users</p>
+					</div>
+				</a>
 			</li>
 			<li>
-				<a sveltekit:prefetch href="/shop">
+				<a href="https://kava-wtore.com" target="_blank">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
 						class:text-white={$page.path === '/shop'}

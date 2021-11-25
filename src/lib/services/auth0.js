@@ -1,5 +1,5 @@
 import createAuth0Client from '@auth0/auth0-spa-js';
-import { user, isAuthenticated, popupOpen } from '$lib/stores/auth0';
+import { auth0user, isAuthenticated, popupOpen } from '$lib/stores/auth0';
 import config from '$lib/config/auth0';
 
 async function createClient() {
@@ -16,7 +16,7 @@ async function loginWithPopup(client, options) {
     try {
         await client.loginWithPopup(options);
 
-        user.set(await client.getUser());
+        auth0user.set(await client.getUser());
         isAuthenticated.set(true);
     } catch (e) {
         // eslint-disable-next-line

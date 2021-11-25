@@ -1,13 +1,10 @@
-let fetchedPosts = []
-
 export const get = async () => {
 
-    if (fetchedPosts.length === 0) {
+    let posts = []
+
         try {
             const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/blogposts');
-            const data = await res.json();
-            fetchedPosts = data;
-            console.log('🀄', data.length)
+            posts = await res.json();
 
         } catch (err) {
             return {
@@ -16,11 +13,10 @@ export const get = async () => {
                 }
             };
         };
-    };
 
     return {
         body: {
-            fetchedPosts
+            posts
         }
     };
 };

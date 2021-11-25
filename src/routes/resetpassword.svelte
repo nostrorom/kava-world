@@ -45,7 +45,6 @@
 	};
 
 	const showConfirmPassword = () => {
-		console.log('show confirm');
 		confirmPasswordInput.type = 'text';
 	};
 

@@ -24,7 +24,7 @@
 		class="absolute top-0 right-0 z-40 w-1/4 h-12 md:w-1/6 rounded-bl-xl overflow-hidden bg-org-500"
 	>
 		<Button on:click={toggle}>
-			<div class="h-5">
+			<div class="h-5 w-5">
 				<Icon icon="close" />
 			</div>
 			<div>Close</div>

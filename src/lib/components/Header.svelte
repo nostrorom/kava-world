@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/UI/Button.svelte';
 	import logo from '/logo-stacked.svg';
-	import { user } from '$lib/stores/user';
+	import { user, isLoggedIn } from '$lib/stores/user';
 	import Icon from '$lib/components/UI/Icon.svelte';
 </script>
 
@@ -14,21 +14,32 @@
 	</div>
 
 	<div class="">
-		<Button
-			on:click={() => {
-				goto('/login');
-			}}
-		>
-			<div class="h-5">
-				<Icon icon="user" />
-			</div>
-			<div class="whitespace-nowrap">
-				{#if $user.username === undefined}
-					Log in
-				{:else}
+		{#if !$isLoggedIn}
+			<Button
+				on:click={() => {
+					goto('/login');
+				}}
+				height={'12'}
+			>
+				<div class="h-5">
+					<Icon icon="user" />
+				</div>
+				<div class="whitespace-nowrap">Log in</div>
+			</Button>
+		{:else}
+			<Button
+				on:click={() => {
+					goto('/profile');
+				}}
+				height={'12'}
+			>
+				<div class="h-5">
+					<Icon icon="user" />
+				</div>
+				<div class="whitespace-nowrap">
 					{$user.username}
-				{/if}
-			</div>
-		</Button>
+				</div>
+			</Button>
+		{/if}
 	</div>
 </header>

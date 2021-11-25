@@ -1,59 +1,95 @@
 <script>
 	import Options from '$lib/components/UI/Options.svelte';
 	import Rating from '$lib/components/UI/Rating.svelte';
-	import { slide, fade } from 'svelte/transition';
-	import { selectedID, reviewedNakamals } from '../stores/nakamals';
+	import Vote from '$lib/components/Vote.svelte';
+	import Review from '$lib/components/Review.svelte';
+	import Icon from '$lib/components/UI/Icon.svelte';
+	// import { slide, fade } from 'svelte/transition';
+	import { selectedID } from '$lib/stores/nakamals';
+	import { createEventDispatcher } from 'svelte';
+	import { user } from '$lib/stores/user';
 
-	export let nakamal = {
-		_id: '',
-		title: '',
-		description: '',
-		img_wp_url: '',
-		tv: '',
-		pool: '',
-		kakai: '',
-		alcohol: '',
-		reviews: ''
+	const dispatch = createEventDispatcher();
+
+	export let nakamal = {};
+
+	$: ({ _id, title, description, img_wp_url, tv, pool, kakai, alcohol, reviews } = nakamal);
+
+	const locateNak = () => {
+		selectedID.set(_id);
+		dispatch('locateNak');
 	};
 
-	export let _id = nakamal._id;
-	export let title = nakamal.title;
-	export let description = nakamal.description;
-	export let img_wp_url = nakamal.img_wp_url;
-	export let tv = nakamal.tv;
-	export let pool = nakamal.pool;
-	export let kakai = nakamal.kakai;
-	export let alcohol = nakamal.alcohol;
-	export let reviews = nakamal.reviews;
+	const viewNak = () => {
+		selectedID.set(_id);
+		dispatch('viewNak');
+	};
+
+	let userReview;
+	let userHasReviewed = false;
+
+	$: if (reviews !== undefined) {
+		userReview = reviews.ratings.find((rating) => {
+			return rating.user_id === $user._id;
+		});
+	}
+
+	$: if (userReview !== undefined) {
+		userHasReviewed = true;
+	}
 </script>
 
-<div
-	on:click={() => {
-		selectedID.set(_id);
-	}}
-	class="flex flex-col h-full w-full cursor-pointer rounded-br-3xl"
->
-	<div class="bg-gradient-to-t from-gry-300 to-white h-48 rounded-tl-3xl overflow-hidden">
+<div class="h-full w-full rounded-br-3xl rounded-tl-3xl bg-gradient-to-br from-gry-200 to-gry-50">
+	<div
+		class="bg-gradient-to-t from-gry-300 to-white h-1/4 rounded-tl-3xl overflow-hidden text-gry-600"
+	>
+		<h3
+			class="py-0.5 h-12 px-3 text-white text-lg font-medium uppercase bg-gradient-to-t from-grn-700 to-grn-600 flex justify-between items-center"
+		>
+			{title}
+		</h3>
 		{#if img_wp_url}
-			<img src={img_wp_url} alt={title} class="h-full w-full object-cover" />
+			<img src={img_wp_url} alt={title} class="h-36 w-full object-cover" />
 		{:else}
 			<img src="/favicon.png" alt={title} class="h-full w-full object-contain p-4" />
 		{/if}
 	</div>
-
-	<h3
-		class="py-1 pl-3 pr-1 text-xl text-white font-medium uppercase bg-gradient-to-t from-grn-600 to-grn-500 flex justify-between items-center"
-	>
-		{title}
-		<Options {tv} {pool} {kakai} {alcohol} />
-	</h3>
-
-	<div
-		class="px-3 py-2 space-y-1 flex flex-col flex-grow rounded-br-3xl bg-gradient-to-tr from-gry-200 to-white"
-	>
-		{#if description}
-			<p class="text-gray-700 leading-snug">{@html description}</p>
-		{/if}
-		<Rating {reviews} />
+	<div class="p-4">
+		<div class="flex justify-center">
+			<Rating {reviews} />
+		</div>
+		<div>
+			<Vote {nakamal} {userReview} {userHasReviewed} />
+		</div>
+		<div>
+			{#each reviews.ratings as review}
+				<Review {review} view="author" />
+			{/each}
+		</div>
 	</div>
+
+	<!-- <div class="">
+		<div class="px-2 sm:px-3 py-1 space-y-1 flex h-5/6 rounded-br-3xl">
+			<div class="w-1/4 pl-4">
+				<button
+					class="h-1/2 py-2 w-full text-gry-400 hover:bg-grn-500 hover:text-white  rounded-lg"
+					on:click={viewNak}
+				>
+					<div class="h-4">
+						<Icon icon="view" />
+					</div>
+					<p class="text-xs">View</p>
+				</button>
+				<button
+					class="h-1/2 py-2 w-full text-gry-400 hover:bg-grn-500 hover:text-white  rounded-lg"
+					on:click={locateNak}
+				>
+					<div class="h-4">
+						<Icon icon="pin" />
+					</div>
+					<p class="text-xs">Map</p>
+				</button>
+			</div>
+		</div>
+	</div> -->
 </div>

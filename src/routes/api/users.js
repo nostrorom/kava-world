@@ -1,10 +1,10 @@
 export const get = async () => {
 
-    let reviews = []
+    let users = []
 
         try {
-            const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/reviews');
-            reviews = await res.json();
+            const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/users');
+            users = await res.json();
 
         } catch (err) {
             return {
@@ -16,7 +16,7 @@ export const get = async () => {
 
     return {
         body: {
-            reviews
+            users
         }
     };
 };

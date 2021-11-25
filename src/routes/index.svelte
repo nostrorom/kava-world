@@ -19,27 +19,32 @@
 </script>
 
 <script>
-	import { slide } from 'svelte/transition';
 	import {
 		fetchedNakamals,
 		fetchedReviews,
 		selectedNakamal,
-		filteredNakamals
+		inRangeNakamals
 	} from '$lib/stores/nakamals';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Modal from '$lib/components/UI/Modal.svelte';
 	import Nakamal from '$lib/components/Nakamal.svelte';
+	import Feature from '$lib/components/Feature.svelte';
 	import Filters from '$lib/components/Filters.svelte';
 
 	import GoogleMap from '$lib/components/GoogleMap.svelte';
 
 	export let data;
 
-	fetchedNakamals.set(data.nakamals.nakamals);
-	fetchedReviews.set(data.reviews.reviews);
+	if ($fetchedReviews.length === 0) {
+		fetchedReviews.set(data.reviews.reviews);
+	}
+
+	if ($fetchedNakamals.length === 0) {
+		fetchedNakamals.set(data.nakamals.nakamals);
+	}
 
 	let showNumber = 24;
-	$: displayedNakamals = $filteredNakamals.slice(0, showNumber);
+	$: displayedNakamals = $inRangeNakamals.slice(0, showNumber);
 
 	let showDetails = false;
 	let showFilters = false;
@@ -59,7 +64,7 @@
 
 {#if showDetails}
 	<Modal on:toggle={toggleDetails}>
-		<Nakamal nakamal={$selectedNakamal} />
+		<Feature nakamal={$selectedNakamal} />
 	</Modal>
 {/if}
 
@@ -71,7 +76,7 @@
 	</Modal>
 {/if}
 
-<div class="flex w-full">
+<div class="flex w-full h-full">
 	<section class="w-full md:w-4/5">
 		<div class="h-1/3 pb-1 relative">
 			<GoogleMap
@@ -89,14 +94,15 @@
 				{/each}
 			</div>
 			<div class="h-24">
-				{#if $filteredNakamals.length >= showNumber}
-					<p class="text-white text-center">
-						Showing {displayedNakamals.length} of {$filteredNakamals.length} results
-					</p>
+				<p class="text-white text-center my-4">
+					Showing {displayedNakamals.length} of {$inRangeNakamals.length} results
+				</p>
+				{#if $inRangeNakamals.length >= showNumber}
 					<Button
 						on:click={() => {
 							showNumber += 24;
 						}}
+						height={'12'}
 					>
 						Show more
 					</Button>
@@ -106,7 +112,7 @@
 	</section>
 
 	<aside class="w-1/5 hidden md:block">
-		<div class="h-2/3 overflow-y-auto">
+		<div class="h-full overflow-y-auto">
 			<Filters />
 		</div>
 	</aside>

@@ -1,16 +1,18 @@
 import { writable, derived } from 'svelte/store'
 
-const fetchedNakamals = writable([])
+export const fetchedNakamals = writable([])
 
-const fetchedProducers = writable([])
+export const fetchedProducers = writable([])
 
-const fetchedReviews = writable([])
+export const fetchedReviews = writable([])
 
-const reviewedNakamals = derived( [fetchedNakamals, fetchedReviews], ([nakamals, reviews], set) => {
+export const testArray = writable([])
+
+export const reviewedNakamals = derived( [fetchedNakamals, fetchedReviews], ([nakamals, reviews], set) => {
         
         nakamals.forEach( (nakamal) => {
 
-            let ratings = reviews.filter((review) => { if (review.nakamal === nakamal._id) {return review} });
+            let ratings = reviews.filter((review) => { if (review.nakamal_id === nakamal._id) {return review} });
             let numRatings = ratings.length;
             let kavRating = 0;
             let kavStars = 0;
@@ -33,11 +35,11 @@ const reviewedNakamals = derived( [fetchedNakamals, fetchedReviews], ([nakamals,
     }
 );
 
-const reviewedProducers = derived( [fetchedProducers, fetchedReviews], ([nakamals, reviews], set) => {
+export const reviewedProducers = derived( [fetchedProducers, fetchedReviews], ([nakamals, reviews], set) => {
         
         nakamals.forEach( (nakamal) => {
 
-            let ratings = reviews.filter((review) => { if (review.nakamal === nakamal._id) {return review} });
+            let ratings = reviews.filter((review) => { if (review.nakamal_id === nakamal._id) {return review} });
             let numRatings = ratings.length;
             let kavRating = 0;
             let kavStars = 0;
@@ -60,41 +62,54 @@ const reviewedProducers = derived( [fetchedProducers, fetchedReviews], ([nakamal
     }
 );
 
-const selectedID = writable('');
+export const selectedID = writable('');
 
-const selectedNakamal = derived([reviewedNakamals, selectedID], ([nakamals, id], set) => {
+export const selectedNakamal = derived([reviewedNakamals, selectedID], ([nakamals, id], set) => {
         set(nakamals.find((nakamal) => {return nakamal._id === id}))
     }
 );
 
-const filterBy = writable({
+export const filterBy = writable({
     type: 'nakamal',
     country: 'all',
     city: 'all',
     kakaiTick: false,
     alcoholTick: false,
     tvTick: false,
-    poolTick: false
+    poolTick: false,
+    nakStars: false,
+    kavStars: false,
+    sortBy: false,
 });
 
-const locateUser = writable(false);
+export const locateUser = writable(false);
 
-const markerIDinRange = writable([]);
+export const markerIDinRange = writable([]);
 
-const filteredNakamals = derived([reviewedNakamals, filterBy, locateUser, markerIDinRange], ([nakamals, filters, locate, inRange], set) => {
+export const filteredNakamals = derived([reviewedNakamals, filterBy], ([nakamals, filters], set) => {
+
         
-        let filtered = nakamals
-            .filter(nakamal => filters.country === 'all' ? true : nakamal.country === filters.country)
-            .filter(nakamal => filters.city === 'all' ? true : nakamal.city === filters.city)
-			.filter(nakamal => filters.kakaiTick === false ? true : nakamal.kakai === true)
-			.filter(nakamal => filters.alcoholTick === false ? true : nakamal.alcohol === true)
-			.filter(nakamal => filters.tvTick === false ? true : nakamal.tv === true)
-			.filter(nakamal => filters.poolTick === false ? true : nakamal.pool === true)
-            .filter(nakamal => locate === false ? true : inRange.some(id => id === nakamal._id))
+    let filtered = nakamals
+        .filter(nakamal => filters.country === 'all' ? true : nakamal.country === filters.country)
+        .filter(nakamal => filters.city === 'all' ? true : nakamal.city === filters.city)
+        .filter(nakamal => filters.kakaiTick === false ? true : nakamal.kakai === true)
+        .filter(nakamal => filters.alcoholTick === false ? true : nakamal.alcohol === true)
+        .filter(nakamal => filters.tvTick === false ? true : nakamal.tv === true)
+        .filter(nakamal => filters.poolTick === false ? true : nakamal.pool === true)
+        .filter(nakamal => filters.kavStars === false ? true : nakamal.reviews.kavStars === filters.kavStars)
+        .filter(nakamal => filters.nakStars === false ? true : nakamal.reviews.nakStars === filters.nakStars)
+        // .filter(nakamal => locate === false ? true : inRange.some(id => id === nakamal._id))
 
         set(filtered);
     }
 )
 
+export const inRangeNakamals = derived([filteredNakamals, markerIDinRange, locateUser], ([nakamals, inRange], set) => {
 
-export { fetchedNakamals, fetchedReviews, reviewedNakamals, selectedID, selectedNakamal, filterBy, filteredNakamals, reviewedProducers, locateUser, markerIDinRange }
+    // let displayed = nakamals.filter(nakamal => locate === false ? true : inRange.some(id => id === nakamal._id))
+    let displayed = nakamals.filter(nakamal => inRange.some(id => id === nakamal._id))
+
+        set(displayed);
+    }
+)
+

@@ -1,17 +1,9 @@
 <script>
 	import Icon from '$lib/components/UI/Icon.svelte';
 
-	export let post = {
-		_id: '',
-		title: '',
-		img_wp_url: '',
-		content: ''
-	};
+	export let post = {};
 
-	// export let _id = null;
-	// export let title = null;
-	// export let img = null;
-	// export let text = null;
+	$: ({ _id, title, img_wp_url } = post);
 
 	import { createEventDispatcher } from 'svelte';
 	const dispatch = createEventDispatcher();
@@ -19,36 +11,42 @@
 	const sendID = () => {
 		let id = post._id;
 		dispatch('highlight', { id });
-		console.log(`from blog card: ${id}`);
 	};
 </script>
 
-<div class="w-4/5 lg:w-1/2 mx-auto rounded-sm shadow-md bg-gray-100" on:click={sendID}>
+<div
+	on:click={sendID}
+	class="h-48 rounded-tl-2xl rounded-br-2xl overflow-hidden bg-gradient-to-t from-gry-300 to-gry-50 relative "
+>
 	<h3
-		class="font-logo py-1 px-1 text-center text-xl text-white uppercase font-medium bg-gradient-to-tr from-grn-500 via-grn-500 to-grn-400"
+		class="text-white text-sm md:text-base font-medium uppercase bg-gradient-to-t from-grn-600 to-grn-500 px-1 md:px-3 py-0.5 md:py-1"
 	>
-		{post.title}
+		{title}
 	</h3>
-
-	<div class="overflow-hidden relative">
-		{#if post.img_wp_url}
-			<img src={post.img_wp_url} alt={post.title} class="w-full object-cover" />
-		{/if}
-
-		{#if post.content}
-			<p class="p-4 text-gray-800 text-wrap space-y-2 overflow-ellipsis max-h-64">
+	<div class="flex h-40">
+		<div class="w-1/4 h-full ">
+			{#if img_wp_url}
+				<img src={img_wp_url} alt={title} class="h-full w-full object-cover" />
+			{:else}
+				<img src="/favicon.png" alt={title} class="h-full w-full object-contain p-4" />
+			{/if}
+		</div>
+		<div class="w-3/4">
+			<div
+				class="h-full text-gry-600 text-sm md:text-base leading-tight md:leading-snug px-1.5 md:px-4 py-1"
+			>
 				{@html post.content}
-			</p>
-		{/if}
-	</div>
-	<div class="flex justify-end items-center">
-		<button
-			class="rounded-tl-md mt-2 flex flew-row justify-center items-center space-x-3 uppercase text-md px-5 py-3 text-org-500 hover:bg-white"
-		>
-			<div class="flex items-center">
-				<Icon icon="view" size="4" />
 			</div>
-			<p class="flex items-center ">Read more</p>
+		</div>
+	</div>
+	<div class="flex justify-end h-1/5 absolute bottom-0 left-0 w-full">
+		<button
+			class="flex h-full items-center px-4 space-x-2 bg-gry-200 text-org-400 hover:bg-grn-500 hover:text-white rounded-tl-2xl"
+		>
+			<div class="h-5">
+				<Icon icon="view" />
+			</div>
+			<p class="text-sm">Read</p>
 		</button>
 	</div>
 </div>

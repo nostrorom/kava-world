@@ -1,12 +1,10 @@
-let nakamals = [];
-
 export const get = async () => {
 
-    if (nakamals.length === 0) {
+    let nakamals = [];
+
         try {
             const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/nakamals');
-            const data = await res.json();
-            nakamals = data;
+            nakamals = await res.json();
 
         } catch (err) {
             return {
@@ -15,7 +13,6 @@ export const get = async () => {
                 }
             };
         };
-    };
 
     return {
         body: {

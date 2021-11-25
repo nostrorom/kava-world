@@ -1,13 +1,28 @@
+<script context="module">
+	export const prerender = true;
+
+	export const load = async ({ fetch }) => {
+		const userRes = await fetch('/api/users');
+		const users = await userRes.json();
+
+		return {
+			props: {
+				data: {
+					users
+				}
+			}
+		};
+	};
+</script>
+
 <script>
 	import { onMount } from 'svelte';
 	import { slide, fade } from 'svelte/transition';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Icon from '$lib/components/UI/Icon.svelte';
 	import Spinner from '$lib/components/UI/Spinner.svelte';
-	import { user, visitor, user_data } from '$lib/stores/user';
+	import { user, visitor, userList, isLoggedIn } from '$lib/stores/user';
 	import { goto } from '$app/navigation';
-
-	const URL = 'https://kava-world-api.herokuapp.com/';
 
 	let formType = 'login';
 	let passwordInput;
@@ -16,6 +31,7 @@
 
 	let requesting = false;
 	let sending = false;
+	// let isAuth0request = false;
 
 	let success = '';
 	const errors = {
@@ -23,6 +39,38 @@
 		password: '',
 		username: ''
 	};
+
+	const URL = 'https://nosdev-api.herokuapp.com/kavaworld';
+
+	export let data;
+	userList.set(data.users.users);
+
+	// Auth0
+
+	import auth0 from '$lib/services/auth0';
+	import { isAuthenticated, auth0client, auth0user } from '$lib/stores/auth0';
+
+	// export let auth0client;
+
+	onMount(async () => {
+		auth0client.set(await auth0.createClient());
+		isAuthenticated.set(await $auth0client.isAuthenticated());
+		auth0user.set(await $auth0client.getUser());
+		console.log($auth0user);
+	});
+
+	function auth0login() {
+		auth0.loginWithPopup($auth0client);
+	}
+
+	function auth0logout() {
+		auth0.logout($auth0client);
+	}
+
+	$: if ($isAuthenticated) {
+		auth0toMongo();
+		console.log($auth0user);
+	}
 
 	// Form type
 
@@ -37,12 +85,6 @@
 	};
 
 	// Show & hide passwords
-
-	// const select = () => {
-	// 	confirmPasswordInput = document.getElementById('confirmPassword');
-	// };
-
-	$: console.log('🤣', passwordInput);
 
 	$: if (typeof window !== 'undefined') {
 		passwordInput = document.getElementById('password');
@@ -74,18 +116,7 @@
 
 	// Check username availability & clear messages
 
-	onMount(async () => {
-		if ($user_data.length === 0) {
-			console.log('user fetch');
-
-			const res = await fetch(`${URL}` + `users`);
-			user_data.set(await res.json());
-
-			// console.log('😶', $user_data);
-		}
-	});
-
-	$: errors.username = $user_data.some(
+	$: errors.username = $userList.some(
 		(user) => user.username.toLowerCase() === $visitor.username.toLowerCase()
 	)
 		? 'Username already taken, please choose another one'
@@ -99,7 +130,9 @@
 	};
 
 	const logout = () => {
+		auth0logout();
 		user.set({});
+		isLoggedIn.set(false);
 	};
 
 	// Server requests
@@ -108,7 +141,7 @@
 		clearMessages();
 		requesting = true;
 
-		const res = await fetch(`${URL}` + `login`, {
+		const res = await fetch(`${URL}/login`, {
 			method: 'POST',
 			headers: {
 				'Content-type': 'application/json'
@@ -130,9 +163,10 @@
 				username: data.username,
 				jwt: data.jwt
 			});
+			isLoggedIn.set(true);
 			setTimeout(() => {
 				goto('/');
-			}, 1500);
+			}, 500);
 		}
 		requesting = false;
 	};
@@ -144,7 +178,7 @@
 			errors.password = 'Passwords do not match';
 		} else {
 			requesting = true;
-			const res = await fetch(`${URL}` + `signup`, {
+			const res = await fetch(`${URL}/signup`, {
 				method: 'POST',
 				headers: {
 					'Content-type': 'application/json'
@@ -172,7 +206,7 @@
 		clearMessages();
 
 		try {
-			const res = await fetch(`${URL}` + `send_verification_link`, {
+			const res = await fetch(`${URL}/send_verification_link`, {
 				method: 'POST',
 				headers: {
 					'Content-type': 'application/json'
@@ -199,7 +233,7 @@
 		sending = true;
 
 		try {
-			const res = await fetch(`${URL}` + `send_reset_link`, {
+			const res = await fetch(`${URL}/send_reset_link`, {
 				method: 'POST',
 				headers: {
 					'Content-type': 'application/json'
@@ -221,11 +255,44 @@
 			errors.email = err;
 		}
 	};
+
+	const auth0toMongo = async () => {
+		// requesting = true;
+
+		try {
+			const res = await fetch(`${URL}/auth0`, {
+				method: 'POST',
+				headers: {
+					'Content-type': 'application/json'
+				},
+				body: JSON.stringify({
+					email: $auth0user.email,
+					username: $auth0user.nickname,
+					auth0id: $auth0user.sub
+				})
+			});
+
+			const data = await res.json();
+
+			user.set({
+				_id: data._id,
+				username: data.username,
+				jwt: data.jwt
+			});
+			isLoggedIn.set(true);
+			setTimeout(() => {
+				goto('/');
+			}, 5000);
+		} catch (error) {
+			console.log(error);
+		}
+		requesting = false;
+	};
 </script>
 
 <div class="w-full py-6 flex justify-center text-white">
 	<div class="w-5/6 px-8 md:w-4/6 lg:w-1/2 max-w-96 py-12 text-center space-y-12">
-		{#if $user.username === undefined}
+		{#if $isLoggedIn === false}
 			<!-- {#if $user === undefined} -->
 			<div class="flex flex-row items-center  cursor-pointer text-org-800">
 				<h2
@@ -378,7 +445,7 @@
 					{:else}
 						<div transition:slide class="pt-6">
 							<div on:click|preventDefault={login}>
-								<Button icon="user">Log in</Button>
+								<Button icon="user" height="12">Log in</Button>
 							</div>
 						</div>
 					{/if}
@@ -442,13 +509,37 @@
 					</h2>
 				{/if}
 			</div>
+
+			<hr />
+
+			<div
+				on:click={auth0login}
+				class="flex justify-center items-center space-x-1 curstor-pointer px-2 py-3 hover:bg-org-700 rounded-md"
+			>
+				<p>Or log in with</p>
+				<div class="h-7 text-indigo-600 bg-gry-200 p-1 rounded-lg">
+					<Icon icon="facebook" />
+				</div>
+				<p>or</p>
+				<div class="h-7 text-emerald-600 bg-gry-200 p-1.5 rounded-lg">
+					<Icon icon="google" />
+				</div>
+			</div>
+			<!-- <div
+				on:click={auth0logout}
+				class="flex justify-center items-center space-x-2 curstor-pointer px-2 py-3 hover:bg-org-700 rounded-md"
+			>
+				<p>Log out</p>
+				<div class="h-5">
+					<Icon icon="close" />
+				</div>
+			</div> -->
 		{:else}
 			<h2 class="pt-24 text-2xl">
 				Hello
 				{$user.username}
 				!
 			</h2>
-			<Button on:click={logout} icon="close">Log out</Button>
 		{/if}
 	</div>
 </div>
