@@ -35,7 +35,7 @@
         "@fontsource/fira-mono": "^4.5.0",
         "@fontsource/mulish": "^4.5.1",
         "@fontsource/poor-story": "^4.5.0",
-        "@googlemaps/js-api-loader": "^1.12.5",
+        "@googlemaps/js-api-loader": "^1.12.10",
         "@googlemaps/markerclusterer": "^1.0.8",
         "@lukeed/uuid": "^2.0.0",
         "@sveltejs/adapter-node": "^1.0.0-next.55",
