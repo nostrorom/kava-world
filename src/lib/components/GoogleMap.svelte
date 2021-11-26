@@ -8,7 +8,7 @@
 	import * as pkg from '@googlemaps/js-api-loader';
 	const { Loader } = pkg;
 
-	console.log(Loader);
+	console.log();
 
 	const dispatch = createEventDispatcher();
 
@@ -33,6 +33,8 @@
 		version: 'weekly',
 		libraries: ['geometry']
 	});
+
+	$: console.log(process.env.MAP_API_KEY, Loader, loader);
 
 	let map;
 	let isMapScriptLoaded = false;
