@@ -6,6 +6,19 @@
 	import '@fontsource/mulish';
 </script>
 
+<svelte:head>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-62WE9QLQFG"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'G-62WE9QLQFG');
+	</script>
+</svelte:head>
+
 <main class="h-screen bg-gradient-to-tr from-org-600 to-org-400 flex flex-col font-main">
 	<div class="h-12">
 		<Header />

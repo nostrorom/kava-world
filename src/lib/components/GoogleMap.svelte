@@ -6,8 +6,8 @@
 	import Spinner from '$lib/components/UI/Spinner.svelte';
 	// import { Loader } from '@googlemaps/js-api-loader';
 	import * as pkg from '@googlemaps/js-api-loader';
-	const { Loader } = pkg;
 
+	const { Loader } = pkg;
 	const dispatch = createEventDispatcher();
 
 	const toggleDetails = () => {
@@ -26,37 +26,16 @@
 
 	export let mapDiv;
 
-	// $: console.log('🧈', Loader.constructor);
-
-	// $: if (typeof window !== 'undefined') {
-	// 	console.log('🥓', Loader);
-	// 	const loader = new Loader({
-	// 		apiKey: process.env.MAP_API_KEY,
-	// 		version: 'weekly',
-	// 		libraries: ['geometry']
-	// 	});
-
-	// 	console.log(loader);
-	// }
-
-	// const loader = new Loader({
-	// 	apiKey: process.env.MAP_API_KEY,
-	// 	version: 'weekly',
-	// 	libraries: ['geometry']
-	// });
-
-	// $: console.log(process.env.MAP_API_KEY, Loader, loader);
-
 	let map;
 	let isMapScriptLoaded = false;
 	let isMapMounted = false;
 	let areMarkersLoaded = false;
-	let mapCoords = { nor: '', est: '', sth: '', wst: '' };
+	// let mapCoords = { nor: '', est: '', sth: '', wst: '' };
 	let mapBounds;
 
 	let markers = [];
 	let pointer;
-	let userMarker;
+	// let userMarker;
 
 	let startPos;
 	let yumiwork = { lat: -17.738600749041584, lng: 168.31435099901404 };
@@ -67,15 +46,11 @@
 	// Load script and initiate map
 
 	$: if (typeof window !== 'undefined') {
-		console.log('api', process.env.MAP_API_KEY);
-
 		let loader = new Loader({
 			apiKey: process.env.MAP_API_KEY,
 			version: 'weekly',
 			libraries: ['geometry']
 		});
-
-		console.log('lad', loader);
 
 		initiateMap(loader);
 	}
@@ -86,7 +61,6 @@
 				console.log(err.message);
 			} else if (document.getElementById(`${mapDiv}`) === null) {
 				setTimeout(() => {
-					console.log('reloading');
 					initiateMap();
 				}, 1);
 			} else {
@@ -233,7 +207,7 @@
 
 		setTimeout(() => {
 			areMarkersLoaded = true;
-		}, 2000);
+		}, 1500);
 	};
 
 	$: if (markers.length !== 0 && $selectedID !== '') {
@@ -276,10 +250,6 @@
 		locateUser.set(!$locateUser);
 	};
 </script>
-
-<!-- <svelte:head>
-	<script src="https://unpkg.com/@googlemaps/js-api-loader@1.0.0/dist/index.min.js"></script>
-</svelte:head> -->
 
 <div class="h-5/6 w-full relative">
 	<div class="h-full w-full absolute">
