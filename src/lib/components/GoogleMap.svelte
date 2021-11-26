@@ -8,6 +8,8 @@
 	import * as pkg from '@googlemaps/js-api-loader';
 	const { Loader } = pkg;
 
+	console.log(Loader);
+
 	const dispatch = createEventDispatcher();
 
 	const toggleDetails = () => {
@@ -251,6 +253,10 @@
 		locateUser.set(!$locateUser);
 	};
 </script>
+
+<!-- <svelte:head>
+	<script src="https://unpkg.com/@googlemaps/js-api-loader@1.0.0/dist/index.min.js"></script>
+</svelte:head> -->
 
 <div class="h-5/6 w-full relative">
 	<div class="h-full w-full absolute">
