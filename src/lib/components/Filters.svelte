@@ -4,7 +4,31 @@
 	import { slide } from 'svelte/transition';
 	import { fetchedNakamals, filterBy, inRangeNakamals } from '$lib/stores/nakamals';
 
-	// Filtering by country
+	// Mapping items by rating
+
+	let ratingRange = [5, 4, 3, 2, 1, 0];
+
+	$: kavMapping = $inRangeNakamals
+		.map((nakamal) => nakamal.reviews.kavStars)
+		.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
+
+	let kavOptions = {};
+
+	$: ratingRange.forEach((i) => {
+		kavOptions[i] = kavMapping.get(i) !== undefined ? kavMapping.get(i) : 0;
+	});
+
+	$: nakMapping = $inRangeNakamals
+		.map((nakamal) => nakamal.reviews.nakStars)
+		.reduce((acc, e) => acc.set(e, (acc.get(e) || 0) + 1), new Map());
+
+	let nakOptions = {};
+
+	$: ratingRange.forEach((i) => {
+		nakOptions[i] = nakMapping.get(i) !== undefined ? nakMapping.get(i) : 0;
+	});
+
+	// Mapping items by country
 
 	$: countryMapping = $inRangeNakamals
 		.map((nakamal) => nakamal.country)
@@ -12,7 +36,7 @@
 
 	$: countryOptions = [...countryMapping.entries()];
 
-	// Filtering by city
+	// Mapping items by city
 
 	$: cityMapping = $inRangeNakamals
 		.map((nakamal) => nakamal.city)
@@ -20,7 +44,7 @@
 
 	$: cityOptions = [...cityMapping.entries()];
 
-	// Filtering by features
+	// Mapping items by features
 
 	$: kakaiMapping = $inRangeNakamals
 		.map((nakamal) => nakamal.kakai)
@@ -82,7 +106,7 @@
 				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
-		{#each [5, 4, 3, 2, 1] as num}
+		{#each ratingRange as num}
 			<div>
 				<label class="text-white">
 					<input type="radio" value={num} bind:group={$filterBy.kavStars} />
@@ -91,7 +115,9 @@
 							<span class="text-xs h-2">🥥</span>
 						{/each}
 					</span>
-					<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
+					<span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs">
+						{kavOptions[num]}
+					</span>
 				</label>
 			</div>
 		{/each}
@@ -106,7 +132,7 @@
 				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
-		{#each [5, 4, 3, 2, 1] as num}
+		{#each ratingRange as num}
 			<div>
 				<label class="text-white">
 					<input type="radio" value={num} bind:group={$filterBy.nakStars} />
@@ -115,7 +141,9 @@
 							<span class="text-xs h-2">🥥</span>
 						{/each}
 					</span>
-					<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
+					<span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs">
+						{nakOptions[num]}
+					</span>
 				</label>
 			</div>
 		{/each}
