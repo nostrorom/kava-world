@@ -7,7 +7,7 @@
 	<nav class="">
 		<ul class="text-org-900">
 			<li>
-				<a sveltekit:prefetch href="/blog">
+				<a href="/blog">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
 						class:text-white={$page.path === '/blog'}
@@ -20,7 +20,7 @@
 				</a>
 			</li>
 			<li>
-				<a sveltekit:prefetch href="/">
+				<a href="/">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
 						class:text-white={$page.path === '/'}
@@ -33,7 +33,7 @@
 				</a>
 			</li>
 			<!-- <li>
-				<a sveltekit:prefetch href="/producers">
+				<a href="/producers">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
 						class:text-white={$page.path === '/producers'}
@@ -46,7 +46,7 @@
 				</a>
 			</li> -->
 			<li>
-				<a sveltekit:prefetch href="/users">
+				<a href="/users">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
 						class:text-white={$page.path === '/users'}
@@ -59,7 +59,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="https://kava-wtore.com" target="_blank">
+				<a href="https://kava-store.com" target="_blank">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
 						class:text-white={$page.path === '/shop'}

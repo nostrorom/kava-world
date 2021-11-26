@@ -1,5 +1,5 @@
 <script context="module">
-	export const prerender = true;
+	export const prerender = false;
 
 	export const load = async ({ fetch }) => {
 		const userRes = await fetch('/api/users');

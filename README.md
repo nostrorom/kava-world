@@ -1,3 +1,3 @@
 ## Description
 
-[Kava World](kava-world.org)
+[Kava World](https://kava-world.org)
