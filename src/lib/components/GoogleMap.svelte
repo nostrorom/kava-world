@@ -35,7 +35,7 @@
 
 	let markers = [];
 	let pointer;
-	// let userMarker;
+	let userMarker;
 
 	let startPos;
 	let yumiwork = { lat: -17.738600749041584, lng: 168.31435099901404 };
