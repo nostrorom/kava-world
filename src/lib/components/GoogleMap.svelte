@@ -8,8 +8,6 @@
 	import * as pkg from '@googlemaps/js-api-loader';
 	const { Loader } = pkg;
 
-	console.log();
-
 	const dispatch = createEventDispatcher();
 
 	const toggleDetails = () => {
@@ -28,13 +26,26 @@
 
 	export let mapDiv;
 
-	const loader = new Loader({
-		apiKey: process.env.MAP_API_KEY,
-		version: 'weekly',
-		libraries: ['geometry']
-	});
+	// $: console.log('🧈', Loader.constructor);
 
-	$: console.log(process.env.MAP_API_KEY, Loader, loader);
+	// $: if (typeof window !== 'undefined') {
+	// 	console.log('🥓', Loader);
+	// 	const loader = new Loader({
+	// 		apiKey: process.env.MAP_API_KEY,
+	// 		version: 'weekly',
+	// 		libraries: ['geometry']
+	// 	});
+
+	// 	console.log(loader);
+	// }
+
+	// const loader = new Loader({
+	// 	apiKey: process.env.MAP_API_KEY,
+	// 	version: 'weekly',
+	// 	libraries: ['geometry']
+	// });
+
+	// $: console.log(process.env.MAP_API_KEY, Loader, loader);
 
 	let map;
 	let isMapScriptLoaded = false;
@@ -55,7 +66,21 @@
 
 	// Load script and initiate map
 
-	const initiateMap = () => {
+	$: if (typeof window !== 'undefined') {
+		console.log('api', process.env.MAP_API_KEY);
+
+		let loader = new Loader({
+			apiKey: process.env.MAP_API_KEY,
+			version: 'weekly',
+			libraries: ['geometry']
+		});
+
+		console.log('lad', loader);
+
+		initiateMap(loader);
+	}
+
+	const initiateMap = (loader) => {
 		loader.loadCallback((err) => {
 			if (err) {
 				console.log(err.message);
@@ -103,10 +128,6 @@
 			}
 		});
 	};
-
-	$: if (typeof window !== 'undefined') {
-		initiateMap();
-	}
 
 	$: if (isMapScriptLoaded) {
 		google.maps.event.addListener(map, 'bounds_changed', () => {
