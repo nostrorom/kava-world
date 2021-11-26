@@ -5,13 +5,13 @@ const config = {
     kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
         target: '#svelte',
-        adapter: adapter()
+        adapter: adapter(),
         // env variables
-        // vite: {
-        //     define: {
-        //         'process.env': process.env,
-        //     },
-        // },
+        vite: {
+            define: {
+                'process.env': process.env,
+            },
+        },
 	},
 
     preprocess: [preprocess({
