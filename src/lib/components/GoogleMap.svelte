@@ -55,6 +55,7 @@
 				console.log(err.message);
 			} else if (document.getElementById(`${mapDiv}`) === null) {
 				setTimeout(() => {
+					console.log('reloading');
 					initiateMap();
 				}, 1);
 			} else {
@@ -162,7 +163,6 @@
 	}
 
 	const displayMarkers = () => {
-		// areMarkersLoaded = false;
 		let inRange = [];
 
 		let center = map.getCenter();
@@ -205,7 +205,6 @@
 		markerIDinRange.set(inRange);
 
 		setTimeout(() => {
-			console.log('end');
 			areMarkersLoaded = true;
 		}, 2000);
 	};
