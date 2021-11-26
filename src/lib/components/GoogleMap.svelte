@@ -4,7 +4,8 @@
 	import Icon from '$lib/components/UI/Icon.svelte';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Spinner from '$lib/components/UI/Spinner.svelte';
-	import { Loader } from '@googlemaps/js-api-loader';
+	// import { Loader } from '@googlemaps/js-api-loader';
+	const Loader = require('@googlemaps/js-api-loader');
 
 	const dispatch = createEventDispatcher();
 
