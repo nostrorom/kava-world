@@ -61,7 +61,7 @@
 				console.log(err.message);
 			} else if (document.getElementById(`${mapDiv}`) === null) {
 				setTimeout(() => {
-					initiateMap();
+					initiateMap(loader);
 				}, 1);
 			} else {
 				yumiwork = new google.maps.LatLng(yumiwork);
