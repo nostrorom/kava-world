@@ -73,29 +73,47 @@
 		.get(true);
 
 	$: poolTrue = poolMapping === undefined ? 0 : poolMapping;
+
+	const sortbykav = () => {
+		let sorted = $inRangeNakamals.sort((nakA, nakB) => {
+			// console.log(nakB.reviews.kavRating - nakA.reviews.kavRating);
+			return nakB.reviews.kavRating - nakA.reviews.kavRating;
+		});
+		// console.log(sorted);
+	};
+	const sortbynak = () => {
+		let sorted = $inRangeNakamals.sort((nakA, nakB) => {
+			return nakB.reviews.nakRating - nakA.reviews.nakRating;
+		});
+		// console.log(sorted);
+	};
 </script>
 
 <div class="">
-	<!-- <Accordion title="Sort by" showAccordion={true}>
+	<!-- <div on:click={sortbykav}>kava</div>
+	<div on:click={sortbynak}>nak</div> -->
+	<Accordion title="Sort by" showAccordion={true}>
 		<div>
 			<label class="text-white">
-				<input type="radio" value={'kavRating'} bind:group={$filterBy.sortBy} />
-				<span class="space-y-0.5">
-					<span class="text-sm h-2">Kava</span>
+				<input type="radio" value={'kav'} bind:group={$filterBy.sortBy.rating} />
+				<span class="inline-block h-3">
+					<Icon icon="leaf" color="text-white" size="3" />
 				</span>
-				<span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" />
+				<span class="inline-block text-sm">Kava quality rating</span>
+				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
 		<div>
 			<label class="text-white">
-				<input type="radio" value={'nakRating'} bind:group={$filterBy.sortBy} />
-				<span class="space-y-0.5">
-					<span class="text-sm h-2">Nakamal</span>
+				<input type="radio" value={'nak'} bind:group={$filterBy.sortBy.rating} />
+				<span class="inline-block h-3">
+					<Icon icon="lightbulb" color="text-white" size="3" />
 				</span>
-				<span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" />
+				<span class="inline-block text-sm">Nakamal quality rating</span>
+				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
-	</Accordion> -->
+	</Accordion>
 	<Accordion title="Kava" showAccordion={true}>
 		<div>
 			<label class="text-white">

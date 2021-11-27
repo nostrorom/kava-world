@@ -79,7 +79,7 @@ export const filterBy = writable({
     poolTick: false,
     nakStars: false,
     kavStars: false,
-    sortBy: false,
+    sortBy: { rating: 'kav', order: 'dsc'},
 });
 
 export const locateUser = writable(false);
@@ -98,6 +98,21 @@ export const filteredNakamals = derived([reviewedNakamals, filterBy], ([nakamals
         .filter(nakamal => filters.poolTick === false ? true : nakamal.pool === true)
         .filter(nakamal => filters.kavStars === false ? true : nakamal.reviews.kavStars === filters.kavStars)
         .filter(nakamal => filters.nakStars === false ? true : nakamal.reviews.nakStars === filters.nakStars)
+        .sort((nakamal1, nakamal2) => {
+            if (filters.sortBy.rating === 'kav') {
+                if (filters.sortBy.order === 'dsc') {
+                    return nakamal2.reviews.kavRating - nakamal1.reviews.kavRating
+                } else if (filters.sortBy.order === 'asc') {
+                    return nakamal1.reviews.kavRating - nakamal2.reviews.kavRating
+                }
+            }
+            if (filters.sortBy.rating === 'nak') {
+                if (filters.sortBy.order === 'dsc') {
+                    return nakamal2.reviews.nakRating - nakamal1.reviews.nakRating
+                } else if (filters.sortBy.order === 'asc') {
+                    return nakamal1.reviews.nakRating - nakamal2.reviews.nakRating
+                }
+            }})
         // .filter(nakamal => locate === false ? true : inRange.some(id => id === nakamal._id))
 
         set(filtered);
