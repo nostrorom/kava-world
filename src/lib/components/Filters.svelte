@@ -90,8 +90,6 @@
 </script>
 
 <div class="">
-	<!-- <div on:click={sortbykav}>kava</div>
-	<div on:click={sortbynak}>nak</div> -->
 	<Accordion title="Sort by" showAccordion={true}>
 		<div>
 			<label class="text-white">
@@ -100,7 +98,6 @@
 					<Icon icon="leaf" color="text-white" size="3" />
 				</span>
 				<span class="inline-block text-sm">Kava quality rating</span>
-				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
 		<div>
@@ -110,7 +107,6 @@
 					<Icon icon="lightbulb" color="text-white" size="3" />
 				</span>
 				<span class="inline-block text-sm">Nakamal quality rating</span>
-				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
 	</Accordion>
@@ -121,7 +117,6 @@
 				<span class="space-y-0.5">
 					<span class="text-sm h-2">All</span>
 				</span>
-				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
 		{#each ratingRange as num}
@@ -147,7 +142,6 @@
 				<span class="space-y-0.5">
 					<span class="text-sm h-2">All</span>
 				</span>
-				<!-- <span class="rounded-full bg-orange-600 px-1.5 py-0.5 ml-1 text-xs" /> -->
 			</label>
 		</div>
 		{#each ratingRange as num}

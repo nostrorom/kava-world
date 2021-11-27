@@ -82,12 +82,13 @@ export const filterBy = writable({
     sortBy: { rating: 'kav', order: 'dsc'},
 });
 
-export const locateUser = writable(false);
+export const usePosition = writable(false);
 
 export const markerIDinRange = writable([]);
 
-export const filteredNakamals = derived([reviewedNakamals, filterBy], ([nakamals, filters], set) => {
+export const closestNak = writable({ nak: null, distance: null});
 
+export const filteredNakamals = derived([reviewedNakamals, filterBy], ([nakamals, filters], set) => {
         
     let filtered = nakamals
         .filter(nakamal => filters.country === 'all' ? true : nakamal.country === filters.country)
@@ -119,7 +120,8 @@ export const filteredNakamals = derived([reviewedNakamals, filterBy], ([nakamals
     }
 )
 
-export const inRangeNakamals = derived([filteredNakamals, markerIDinRange, locateUser], ([nakamals, inRange], set) => {
+
+export const inRangeNakamals = derived([filteredNakamals, markerIDinRange, usePosition], ([nakamals, inRange], set) => {
 
     // let displayed = nakamals.filter(nakamal => locate === false ? true : inRange.some(id => id === nakamal._id))
     let displayed = nakamals.filter(nakamal => inRange.some(id => id === nakamal._id))

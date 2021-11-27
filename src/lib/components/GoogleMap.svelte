@@ -20,7 +20,7 @@
 		markerIDinRange,
 		selectedID,
 		selectedNakamal,
-		locateUser,
+		usePosition,
 		filterBy
 	} from '$lib/stores/nakamals';
 
@@ -37,8 +37,8 @@
 	let pointer;
 	let userMarker;
 
-	let startPos;
 	let yumiwork = { lat: -17.738600749041584, lng: 168.31435099901404 };
+	let startPos;
 	let searchArea;
 	let radiusInKm = 2;
 	$: searchRadius = radiusInKm * 1000;
@@ -64,7 +64,6 @@
 					initiateMap(loader);
 				}, 1);
 			} else {
-				yumiwork = new google.maps.LatLng(yumiwork);
 				startPos = yumiwork;
 
 				map = new google.maps.Map(document.getElementById(`${mapDiv}`), {
@@ -108,9 +107,12 @@
 			mapBounds = map.getBounds();
 		});
 
+		console.log('%cbounds changed', 'color:magenta');
+
 		if (mapBounds !== undefined) {
 			isMapMounted = true;
 		}
+		displayMarkers();
 	}
 
 	// Defining markers
@@ -152,7 +154,7 @@
 	// Displaying markers, reacting to filter and range change
 
 	$: if (isMapMounted) {
-		if ($locateUser == true) {
+		if ($usePosition == true) {
 			searchArea.setMap(map);
 			searchArea.setCenter(map.getCenter());
 			searchArea.setRadius(searchRadius);
@@ -166,8 +168,6 @@
 	const displayMarkers = () => {
 		let inRange = [];
 
-		let center = map.getCenter();
-
 		markers.forEach((marker) => {
 			let isMarkerInRange = false;
 			let position = marker.position;
@@ -176,15 +176,15 @@
 			});
 
 			if (marker !== undefined && isFiltered === true) {
-				if ($locateUser === true) {
+				if ($usePosition === true) {
 					let distanceToCenter = google.maps.geometry.spherical.computeDistanceBetween(
-						center,
+						startPos,
 						position
 					);
 					if (distanceToCenter < searchRadius) {
 						isMarkerInRange = true;
 					}
-				} else if ($locateUser === false) {
+				} else if ($usePosition === false) {
 					if (
 						marker.position.lat() < mapBounds.getNorthEast().lat() &&
 						marker.position.lng() < mapBounds.getNorthEast().lng() &&
@@ -246,8 +246,43 @@
 
 	// Locating user
 
-	const toggleLocateUser = () => {
-		locateUser.set(!$locateUser);
+	const locateUser = () => {
+		usePosition.set(true);
+		if (navigator.geolocation) {
+			const success = (position) => {
+				startPos = {
+					lat: position.coords.latitude,
+					lng: position.coords.longitude
+				};
+
+				map.setCenter(startPos);
+				positionUser(startPos);
+
+				// route['origin'] = new_position;
+			};
+
+			const error = () => {
+				alert('Sorry, something went wrong. Please retry');
+			};
+
+			navigator.geolocation.getCurrentPosition(success, error);
+		}
+	};
+
+	const locateYumiwork = () => {
+		usePosition.set(true);
+		startPos = yumiwork;
+
+		map.setCenter(startPos);
+		positionUser(startPos);
+	};
+
+	const positionUser = (pos) => {
+		userMarker.setPosition(pos);
+		userMarker.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(() => {
+			userMarker.setAnimation(null);
+		}, 1500);
 	};
 </script>
 
@@ -313,16 +348,26 @@
 <div class="h-1/6 grid grid-cols-12">
 	<div class="col-span-8 md:col-span-12 flex items-center">
 		<button
-			on:click={toggleLocateUser}
+			on:click={locateYumiwork}
 			class="text-white hover:bg-grn-600 py-1 px-1.5 rounded-md"
-			class:bg-org-700={$locateUser}
+			class:bg-org-700={$usePosition && startPos === yumiwork}
+		>
+			<div class="h-4">
+				<Icon icon="pin" />
+			</div>
+			<p class="text-xs whitespace-nowrap">Port Vila</p>
+		</button>
+		<button
+			on:click={locateUser}
+			class="text-white hover:bg-grn-600 py-1 px-1.5 rounded-md"
+			class:bg-org-700={$usePosition && startPos !== yumiwork}
 		>
 			<div class="h-4">
 				<Icon icon="pin" />
 			</div>
 			<p class="text-xs whitespace-nowrap">Near me</p>
 		</button>
-		{#if $locateUser}
+		{#if $usePosition}
 			<div transition:slide class="flex flex-col flex-grow">
 				<p class="text-white font-bold text-center text-sm">
 					{radiusInKm} km
@@ -331,6 +376,17 @@
 					<input type="range" min="0" max="10" step="0.5" class="w-full" bind:value={radiusInKm} />
 				</div>
 			</div>
+			<button
+				on:click={() => {
+					usePosition.set(false);
+				}}
+				class="text-white hover:bg-grn-600 py-1 px-1.5 rounded-md"
+			>
+				<div class="h-4">
+					<Icon icon="close" />
+				</div>
+				<p class="text-xs whitespace-nowrap">Stop GPS</p>
+			</button>
 		{/if}
 	</div>
 
