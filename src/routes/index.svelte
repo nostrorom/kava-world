@@ -89,7 +89,7 @@
 		<div class="h-2/3 space-y-2 overflow-y-auto relative">
 			<div class="grid grid-cols-1lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-2">
 				{#each displayedNakamals as nakamal (nakamal._id)}
-					<div class="">
+					<div class="h-48">
 						<Nakamal {nakamal} on:locateNak on:viewNak={toggleDetails} />
 					</div>
 				{/each}
