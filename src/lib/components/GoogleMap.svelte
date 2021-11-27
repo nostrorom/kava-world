@@ -215,6 +215,9 @@
 			} else {
 				marker.setMap(null);
 			}
+			if (marker._id === $selectedID) {
+				marker.setMap(null);
+			}
 		});
 
 		markerIDinRange.set(inRange);
@@ -232,32 +235,35 @@
 	$: console.log($closestNak.nakamal);
 
 	$: if (markers.length !== 0 && $selectedID !== '') {
-		if (pointer !== undefined) {
-			pointer.setIcon({
-				path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-				scale: 4,
-				strokeWeight: 0.5,
-				strokeColor: '#FFF',
-				fillOpacity: 0.9,
-				fillColor: '#FF5F00'
+		if (pointer === undefined) {
+			pointer = new google.maps.Marker({
+				position: {
+					lat: $selectedNakamal.gps_lat,
+					lng: $selectedNakamal.gps_lng
+				},
+				type: $selectedNakamal.type,
+				map,
+				options: { title: $selectedNakamal.title },
+				_id: $selectedNakamal._id,
+				icon: {
+					path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+					scale: 6,
+					strokeWeight: 1,
+					strokeColor: '#4D7C0F',
+					fillOpacity: 0.8,
+					fillColor: '#A3E635'
+				}
+			});
+		} else {
+			pointer.setPosition({
+				lat: $selectedNakamal.gps_lat,
+				lng: $selectedNakamal.gps_lng
 			});
 		}
 
-		pointer = markers.find((marker) => {
-			return marker._id === $selectedID;
-		});
-
-		pointer.setMap(map);
-
-		pointer.setIcon({
-			path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-			scale: 6,
-			strokeWeight: 1,
-			strokeColor: '#4D7C0F',
-			fillOpacity: 0.8,
-			fillColor: '#A3E635'
-		});
-		pointer.setAnimation(google.maps.Animation.BOUNCE);
+		setTimeout(() => {
+			pointer.setAnimation(google.maps.Animation.BOUNCE);
+		}, 1000);
 		setTimeout(() => {
 			pointer.setAnimation(null);
 		}, 2000);
