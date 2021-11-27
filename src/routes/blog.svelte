@@ -75,8 +75,12 @@
 	</Modal>
 {/if}
 
-<section class="h-full w-full md:w-3/4 space-y-2 md:space-y-3 overflow-y-auto">
-	{#each posts as post}
-		<Blogpost {post} on:highlight={readPost} />
-	{/each}
+<!-- <section class="h-full w-full md:w-3/4 space-y-2 md:space-y-3 overflow-y-auto"> -->
+
+<section class="w-full mb-2 flex justify-center overflow-y-auto">
+	<div class="w-5/6 md:w-4/6 max-w-96 space-y-2 md:space-y-2">
+		{#each posts as post}
+			<Blogpost {post} on:highlight={readPost} />
+		{/each}
+	</div>
 </section>

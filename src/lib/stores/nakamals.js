@@ -86,7 +86,7 @@ export const usePosition = writable(false);
 
 export const markerIDinRange = writable([]);
 
-export const closestNak = writable({ nak: null, distance: null});
+export const closestNak = writable({ _id: undefined, distance: 20000000, distanceInKm: undefined, nakamal:undefined});
 
 export const filteredNakamals = derived([reviewedNakamals, filterBy], ([nakamals, filters], set) => {
         

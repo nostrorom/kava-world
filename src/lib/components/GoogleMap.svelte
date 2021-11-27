@@ -21,7 +21,8 @@
 		selectedID,
 		selectedNakamal,
 		usePosition,
-		filterBy
+		filterBy,
+		closestNak
 	} from '$lib/stores/nakamals';
 
 	export let mapDiv;
@@ -154,7 +155,7 @@
 	// Displaying markers, reacting to filter and range change
 
 	$: if (isMapMounted) {
-		if ($usePosition == true) {
+		if ($usePosition === true) {
 			searchArea.setMap(map);
 			searchArea.setCenter(map.getCenter());
 			searchArea.setRadius(searchRadius);
@@ -166,22 +167,35 @@
 	}
 
 	const displayMarkers = () => {
+		closestNak.set({
+			_id: null,
+			distance: 20000000
+		});
+
+		console.log($closestNak);
 		let inRange = [];
 
 		markers.forEach((marker) => {
 			let isMarkerInRange = false;
-			let position = marker.position;
+			let distanceToStartPos = google.maps.geometry.spherical.computeDistanceBetween(
+				startPos,
+				marker.position
+			);
 			let isFiltered = $filteredNakamals.some((nakamal) => {
 				return nakamal._id === marker._id;
 			});
 
+			if (distanceToStartPos < $closestNak.distance && marker) {
+				closestNak.set({
+					_id: marker._id,
+					distance: distanceToStartPos
+				});
+				console.log($closestNak);
+			}
+
 			if (marker !== undefined && isFiltered === true) {
 				if ($usePosition === true) {
-					let distanceToCenter = google.maps.geometry.spherical.computeDistanceBetween(
-						startPos,
-						position
-					);
-					if (distanceToCenter < searchRadius) {
+					if (distanceToStartPos < searchRadius) {
 						isMarkerInRange = true;
 					}
 				} else if ($usePosition === false) {
@@ -205,10 +219,17 @@
 
 		markerIDinRange.set(inRange);
 
+		$closestNak.nakamal = $reviewedNakamals.find((nakamal) => {
+			return nakamal._id === $closestNak._id;
+		});
+		$closestNak.distanceInKm = Math.round($closestNak.distance / 100) / 10;
+
 		setTimeout(() => {
 			areMarkersLoaded = true;
 		}, 1500);
 	};
+
+	$: console.log($closestNak.nakamal);
 
 	$: if (markers.length !== 0 && $selectedID !== '') {
 		if (pointer !== undefined) {
@@ -280,6 +301,7 @@
 	const positionUser = (pos) => {
 		userMarker.setPosition(pos);
 		userMarker.setAnimation(google.maps.Animation.BOUNCE);
+		searchArea.setCenter(pos);
 		setTimeout(() => {
 			userMarker.setAnimation(null);
 		}, 1500);
@@ -310,12 +332,14 @@
 			</div>
 		{/if}
 		{#if $selectedNakamal !== undefined}
-			<div on:click={toggleDetails} class="max-w-2/3 absolute bottom-0 cursor-pointer">
+			<div on:click={toggleDetails} class="max-w-1/3 absolute bottom-0 cursor-pointer">
 				<div>
 					<div
-						class="flex bg-gradient-to-tr from-grn-700 to-grn-500 px-2 py-1 rounded-tr-2xl items-center"
+						class="flex bg-gradient-to-tr from-grn-700 to-grn-500 px-1 py-0.5 rounded-tr-2xl items-center text-sm"
 					>
-						<h3 class="text-white font-bold uppercase text-sm">{$selectedNakamal.title}</h3>
+						<h3 class="text-white font-bold uppercase text-xs md:text-sm">
+							{$selectedNakamal.title}
+						</h3>
 						<div on:click={toggleDetails} class="h-4 px-3 text-white cursor-pointer">
 							<Icon icon="view" />
 						</div>

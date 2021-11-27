@@ -23,7 +23,8 @@
 		fetchedNakamals,
 		fetchedReviews,
 		selectedNakamal,
-		inRangeNakamals
+		inRangeNakamals,
+		closestNak
 	} from '$lib/stores/nakamals';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Modal from '$lib/components/UI/Modal.svelte';
@@ -94,9 +95,24 @@
 				{/each}
 			</div>
 			<div class="h-24">
-				<p class="text-white text-center my-4">
-					Showing {displayedNakamals.length} of {$inRangeNakamals.length} results
-				</p>
+				{#if displayedNakamals.length === 0 && $closestNak.nakamal !== undefined}
+					<p class="text-white text-center my-4">
+						No nakamal matches your search. To get more results, try to modify your filters
+					</p>
+					<p class="text-white text-center my-4">
+						The closest nakamal to your position is at
+						<strong class=" text-lg font-bold">{$closestNak.distanceInKm} Km </strong>
+						:
+					</p>
+					<div class="">
+						<Nakamal nakamal={$closestNak.nakamal} on:locateNak on:viewNak={toggleDetails} />
+						<!-- {$closestNak.nakamal} -->
+					</div>
+				{:else}
+					<p class="text-white text-center my-4">
+						Showing {displayedNakamals.length} of {$inRangeNakamals.length} results
+					</p>
+				{/if}
 				{#if $inRangeNakamals.length >= showNumber}
 					<Button
 						on:click={() => {

@@ -94,19 +94,19 @@
 		<div>
 			<label class="text-white">
 				<input type="radio" value={'kav'} bind:group={$filterBy.sortBy.rating} />
-				<span class="inline-block h-3">
+				<span class="inline-block h-3 w-3">
 					<Icon icon="leaf" color="text-white" size="3" />
 				</span>
-				<span class="inline-block text-sm">Kava quality rating</span>
+				<span class="inline-block text-sm">Kava rating</span>
 			</label>
 		</div>
 		<div>
 			<label class="text-white">
 				<input type="radio" value={'nak'} bind:group={$filterBy.sortBy.rating} />
-				<span class="inline-block h-3">
+				<span class="inline-block h-3 w-3">
 					<Icon icon="lightbulb" color="text-white" size="3" />
 				</span>
-				<span class="inline-block text-sm">Nakamal quality rating</span>
+				<span class="inline-block text-sm">Nak rating</span>
 			</label>
 		</div>
 	</Accordion>
