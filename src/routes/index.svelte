@@ -87,9 +87,9 @@
 			/>
 		</div>
 		<div class="h-2/3 space-y-2 overflow-y-auto relative">
-			<div class="grid grid-cols-1lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-2">
+			<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-2">
 				{#each displayedNakamals as nakamal (nakamal._id)}
-					<div class="h-48">
+					<div class="">
 						<Nakamal {nakamal} on:locateNak on:viewNak={toggleDetails} />
 					</div>
 				{/each}
@@ -104,9 +104,10 @@
 						<strong class=" text-lg font-bold">{$closestNak.distanceInKm} Km </strong>
 						:
 					</p>
-					<div class="">
-						<Nakamal nakamal={$closestNak.nakamal} on:locateNak on:viewNak={toggleDetails} />
-						<!-- {$closestNak.nakamal} -->
+					<div class="flex justify-center">
+						<div class="max-w-96">
+							<Nakamal nakamal={$closestNak.nakamal} on:locateNak on:viewNak={toggleDetails} />
+						</div>
 					</div>
 				{:else}
 					<p class="text-white text-center my-4">
