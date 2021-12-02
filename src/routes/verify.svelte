@@ -52,7 +52,7 @@
 		clearMessages();
 
 		try {
-			const res = await fetch(`${URL}` + `send_verification_link`, {
+			const res = await fetch(`${URL}/send_verification_link`, {
 				method: 'POST',
 				headers: {
 					'Content-type': 'application/json'
@@ -80,7 +80,7 @@
 		checking = true;
 
 		try {
-			const res = await fetch(`${URL}` + `verify_email`, {
+			const res = await fetch(`${URL}/verify_email`, {
 				method: 'POST',
 				headers: {
 					'Content-type': 'application/json'
