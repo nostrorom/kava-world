@@ -15,7 +15,7 @@
 		}
 		gtag('js', new Date());
 
-		gtag('config', 'G-62WE9QLQFG');
+		gtag('config', 'G-9WFNNZGES8');
 	</script>
 </svelte:head>
 
