@@ -8,7 +8,7 @@
 
 	import { visitor } from '$lib/stores/user.js';
 
-	const URL = 'https://kava-wolrd-api.herokuapp.com/';
+	const URL = process.env.API_URL;
 
 	let error = '';
 	let success = '';

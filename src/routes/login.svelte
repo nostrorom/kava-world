@@ -40,7 +40,7 @@
 		username: ''
 	};
 
-	const URL = 'https://nosdev-api.herokuapp.com/kavaworld';
+	const URL = process.env.API_URL;
 
 	export let data;
 	userList.set(data.users.users);
