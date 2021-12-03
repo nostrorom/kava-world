@@ -48,6 +48,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Users</title>
+</svelte:head>
+
 <div class="w-full my-4 flex justify-center overflow-y-auto">
 	<div class="w-5/6 px-8 md:w-4/6 lg:w-1/2 max-w-96 py-12 text-center space-y-4">
 		{#each $usersWithHistory as user}

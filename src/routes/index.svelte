@@ -60,7 +60,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Nakamals</title>
 </svelte:head>
 
 {#if showDetails}

@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>Shop</title>
 </svelte:head>
 
 <section class="h-full w-full">
