@@ -1,6 +1,6 @@
 {
     "name": "kava-world",
-    "version": "0.8.2",
+    "version": "0.8.3",
     "engines": {
         "node": "16.x"
     },
@@ -31,17 +31,14 @@
     "type": "module",
     "dependencies": {
         "@auth0/auth0-spa-js": "^1.19.2",
-        "@fontsource/fira-mono": "^4.5.0",
         "@fontsource/mulish": "^4.5.2",
         "@fontsource/poor-story": "^4.5.0",
         "@googlemaps/js-api-loader": "^1.12.10",
         "@googlemaps/markerclusterer": "^1.0.15",
         "@lukeed/uuid": "^2.0.0",
-        "@sveltejs/adapter-auto": "^1.0.0-next.3",
         "@sveltejs/adapter-node": "^1.0.0-next.55",
         "@sveltejs/kit": "next",
         "cookie": "^0.4.1",
-        "dotenv": "^10.0.0",
         "google-maps": "^4.3.3"
     }
 }
