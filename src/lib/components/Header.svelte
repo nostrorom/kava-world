@@ -3,7 +3,10 @@
 	import Button from '$lib/components/UI/Button.svelte';
 	import logo from '../../../static/logo-stacked.svg';
 	import { user, isLoggedIn } from '$lib/stores/user';
+	import { isAuthenticated } from '$lib/stores/auth0';
 	import Icon from '$lib/components/UI/Icon.svelte';
+
+	$console.log('auth', $isAuthenticated, 'log', $isLoggedIn, $user);
 </script>
 
 <header class="flex w-full h-full py-1 justify-between items-center">
