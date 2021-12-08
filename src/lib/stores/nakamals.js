@@ -130,3 +130,5 @@ export const inRangeNakamals = derived([filteredNakamals, markerIDinRange, usePo
     }
 )
 
+export const mapCenter = writable();
+

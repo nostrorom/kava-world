@@ -24,7 +24,8 @@
 		fetchedReviews,
 		selectedNakamal,
 		inRangeNakamals,
-		closestNak
+		closestNak,
+		mapCenter
 	} from '$lib/stores/nakamals';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Modal from '$lib/components/UI/Modal.svelte';
@@ -56,6 +57,10 @@
 
 	const toggleFilters = () => {
 		showFilters = !showFilters;
+	};
+
+	const centerOnNak = () => {
+		mapCenter.set({ lat: $selectedNakamal.gps_lat, lng: $selectedNakamal.gps_lng });
 	};
 </script>
 
@@ -90,7 +95,7 @@
 			<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-2">
 				{#each displayedNakamals as nakamal (nakamal._id)}
 					<div class="">
-						<Nakamal {nakamal} on:locateNak on:viewNak={toggleDetails} />
+						<Nakamal {nakamal} on:locateNak={centerOnNak} on:viewNak={toggleDetails} />
 					</div>
 				{/each}
 			</div>
@@ -106,7 +111,11 @@
 					</p>
 					<div class="flex justify-center">
 						<div class="max-w-96">
-							<Nakamal nakamal={$closestNak.nakamal} on:locateNak on:viewNak={toggleDetails} />
+							<Nakamal
+								nakamal={$closestNak.nakamal}
+								on:locateNak={centerOnNak}
+								on:viewNak={toggleDetails}
+							/>
 						</div>
 					</div>
 				{:else}

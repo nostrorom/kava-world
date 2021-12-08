@@ -10,10 +10,12 @@
 
 	export let nakamal = {};
 
-	$: ({ _id, title, description, img_wp_url, tv, pool, kakai, alcohol, reviews } = nakamal);
+	$: ({ _id, title, gps_lat, gps_lng, description, img_wp_url, tv, pool, kakai, alcohol, reviews } =
+		nakamal);
 
 	const locateNak = () => {
 		selectedID.set(_id);
+
 		dispatch('locateNak');
 	};
 

@@ -18,6 +18,7 @@
 		filteredNakamals,
 		reviewedNakamals,
 		markerIDinRange,
+		mapCenter,
 		selectedID,
 		selectedNakamal,
 		usePosition,
@@ -75,7 +76,7 @@
 
 				userMarker = new google.maps.Marker({
 					position: startPos,
-					map: map,
+					map,
 					options: { title: 'Me' },
 					icon: {
 						path: google.maps.SymbolPath.CIRCLE,
@@ -115,6 +116,14 @@
 		}
 		displayMarkers();
 	}
+
+	// Reacting to map center change
+
+	$: if (isMapMounted) {
+		map.setCenter($mapCenter);
+	}
+
+	$: console.log('mapcenter', $mapCenter);
 
 	// Defining markers
 
@@ -198,7 +207,7 @@
 					if (distanceToStartPos < searchRadius) {
 						isMarkerInRange = true;
 					}
-				} else if ($usePosition === false) {
+				} else if ($usePosition === false && mapBounds !== null) {
 					if (
 						marker.position.lat() < mapBounds.getNorthEast().lat() &&
 						marker.position.lng() < mapBounds.getNorthEast().lng() &&
@@ -268,7 +277,7 @@
 			pointer.setAnimation(null);
 		}, 2000);
 
-		map.setCenter(pointer.position);
+		// map.setCenter(pointer.position);
 	}
 
 	// Locating user
@@ -282,7 +291,8 @@
 					lng: position.coords.longitude
 				};
 
-				map.setCenter(startPos);
+				// map.setCenter(startPos);
+				mapCenter.set(startPos);
 				positionUser(startPos);
 
 				// route['origin'] = new_position;
@@ -299,8 +309,8 @@
 	const locateYumiwork = () => {
 		usePosition.set(true);
 		startPos = yumiwork;
-
-		map.setCenter(startPos);
+		// map.setCenter(startPos);
+		mapCenter.set(startPos);
 		positionUser(startPos);
 	};
 
@@ -346,7 +356,7 @@
 						<h3 class="text-white font-bold uppercase text-xs md:text-sm">
 							{$selectedNakamal.title}
 						</h3>
-						<div on:click={toggleDetails} class="h-4 px-3 text-white cursor-pointer">
+						<div class="h-4 px-3 text-white cursor-pointer">
 							<Icon icon="view" />
 						</div>
 					</div>

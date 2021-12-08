@@ -1,6 +1,6 @@
 {
     "name": "kava-world",
-    "version": "0.8.3",
+    "version": "0.8.4",
     "engines": {
         "node": "16.x"
     },
