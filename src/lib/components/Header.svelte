@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="">
-		{#if !$isLoggedIn}
+		{#if !$isLoggedIn || $user.username === undefined}
 			<Button
 				on:click={() => {
 					goto('/login');
