@@ -42,6 +42,8 @@
 
 	const URL = process.env.API_URL;
 
+	$: console.log(URL);
+
 	export let data;
 	userList.set(data.users.users);
 
@@ -56,7 +58,7 @@
 		auth0client.set(await auth0.createClient());
 		isAuthenticated.set(await $auth0client.isAuthenticated());
 		auth0user.set(await $auth0client.getUser());
-		console.log($auth0user);
+		console.log('auth0user', $auth0user);
 	});
 
 	function auth0login() {
@@ -68,8 +70,8 @@
 	}
 
 	$: if ($isAuthenticated) {
-		auth0toMongo();
-		console.log($auth0user);
+		console.log('%c auth0user auth react', 'color: magenta', $auth0user);
+		auth0toMongo($auth0user);
 	}
 
 	// Form type
@@ -130,9 +132,9 @@
 	};
 
 	const logout = () => {
+		isLoggedIn.set(false);
 		auth0logout();
 		user.set({});
-		isLoggedIn.set(false);
 	};
 
 	// Server requests
@@ -256,14 +258,18 @@
 		}
 	};
 
-	const auth0toMongo = async () => {
+	const auth0toMongo = async (a0user) => {
 		// requesting = true;
 
+		console.log('auth0tomongo', a0user);
+
 		try {
-			const res = await fetch(`${URL}/auth0`, {
+			// const res = await fetch(`${URL}/auth0`, {
+			const res = await fetch('http://localhost:5000/kavaworld/auth0', {
 				method: 'POST',
 				headers: {
-					'Content-type': 'application/json'
+					'Content-type': 'application/json',
+					'Access-Control-Allow-Origin': '*'
 				},
 				body: JSON.stringify({
 					email: $auth0user.email,
@@ -273,6 +279,7 @@
 			});
 
 			const data = await res.json();
+			console.log(data);
 
 			user.set({
 				_id: data._id,
@@ -280,13 +287,13 @@
 				jwt: data.jwt
 			});
 			isLoggedIn.set(true);
-			setTimeout(() => {
-				goto('/');
-			}, 500);
+			// setTimeout(() => {
+			// 	goto('/');
+			// }, 500);
 		} catch (error) {
 			console.log(error);
 		}
-		requesting = false;
+		// requesting = false;
 	};
 </script>
 

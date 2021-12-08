@@ -108,7 +108,7 @@
 			mapBounds = map.getBounds();
 		});
 
-		console.log('%cbounds changed', 'color:magenta');
+		// console.log('%cbounds changed', 'color:magenta');
 
 		if (mapBounds !== undefined) {
 			isMapMounted = true;
@@ -172,7 +172,7 @@
 			distance: 20000000
 		});
 
-		console.log($closestNak);
+		// console.log($closestNak);
 		let inRange = [];
 
 		markers.forEach((marker) => {
@@ -190,7 +190,7 @@
 					_id: marker._id,
 					distance: distanceToStartPos
 				});
-				console.log($closestNak);
+				// console.log($closestNak);
 			}
 
 			if (marker !== undefined && isFiltered === true) {
@@ -232,7 +232,7 @@
 		}, 1500);
 	};
 
-	$: console.log($closestNak.nakamal);
+	// $: console.log($closestNak.nakamal);
 
 	$: if (markers.length !== 0 && $selectedID !== '') {
 		if (pointer === undefined) {

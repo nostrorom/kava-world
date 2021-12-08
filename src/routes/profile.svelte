@@ -10,6 +10,7 @@
 	import { goto } from '$app/navigation';
 
 	const logout = () => {
+		isLoggedIn.set(false);
 		user.set({});
 		if ($auth0client) {
 			auth0.logout($auth0client);
