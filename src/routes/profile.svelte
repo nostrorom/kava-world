@@ -11,7 +11,9 @@
 
 	const logout = () => {
 		user.set({});
-		auth0.logout($auth0client);
+		if ($auth0client) {
+			auth0.logout($auth0client);
+		}
 		goto('/');
 	};
 	const login = () => {
@@ -30,7 +32,7 @@
 
 <div class="w-full my-4 flex justify-center overflow-y-auto">
 	<div class="w-5/6 px-8 md:w-4/6 lg:w-1/2 max-w-96 py-12 text-center space-y-4">
-		{#if $isLoggedIn && user.username !== undefined}
+		{#if $isLoggedIn && $user.username !== undefined}
 			<div class="rounded-md bg-gradient-to-tr from-gry-200 to-gry-50 grid grid-cols-12 p-2">
 				<div class="my-2 h-5 col-span-2 text-gry-400">
 					<Icon icon="user2" />
