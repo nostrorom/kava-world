@@ -282,7 +282,7 @@
 			isLoggedIn.set(true);
 			setTimeout(() => {
 				goto('/');
-			}, 5000);
+			}, 500);
 		} catch (error) {
 			console.log(error);
 		}
