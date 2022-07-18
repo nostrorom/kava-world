@@ -1,11 +1,13 @@
-<script context="module">
-	export const prerender = true;
+<script context="module" lang="ts">
+	import type { LoadEvent } from '@sveltejs/kit';
 
-	export const load = async ({ fetch }) => {
-		const nakRes = await fetch('/api/nakamals');
-		const revRes = await fetch('/api/reviews');
-		const nakamals = await nakRes.json();
-		const reviews = await revRes.json();
+	export const prerender: boolean = true;
+
+	export const load = async ({ fetch }: LoadEvent) => {
+		const nakRes: Response = await fetch('/api/nakamals');
+		const revRes: Response = await fetch('/api/reviews');
+		const nakamals: Nakamal[] = await nakRes.json();
+		const reviews: Review[] = await revRes.json();
 
 		return {
 			props: {
@@ -18,7 +20,7 @@
 	};
 </script>
 
-<script>
+<script lang="ts">
 	import {
 		fetchedNakamals,
 		fetchedReviews,
@@ -26,16 +28,23 @@
 		inRangeNakamals,
 		closestNak,
 		mapCenter
-	} from '$lib/stores/nakamals';
+	} from '$shared/nakamals';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Modal from '$lib/components/UI/Modal.svelte';
-	import Nakamal from '$lib/components/Nakamal.svelte';
+	import NakamalCard from '$lib/components/Nakamal.svelte';
 	import Feature from '$lib/components/Feature.svelte';
 	import Filters from '$lib/components/Filters.svelte';
 
 	import GoogleMap from '$lib/components/GoogleMap.svelte';
 
-	export let data;
+	export let data: {
+		nakamals: {
+			nakamals: Nakamal[];
+		};
+		reviews: {
+			reviews: Review[];
+		};
+	};
 
 	if ($fetchedReviews.length === 0) {
 		fetchedReviews.set(data.reviews.reviews);
@@ -45,21 +54,21 @@
 		fetchedNakamals.set(data.nakamals.nakamals);
 	}
 
-	let showNumber = 24;
+	let showNumber: number = 24;
 	$: displayedNakamals = $inRangeNakamals.slice(0, showNumber);
 
-	let showDetails = false;
-	let showFilters = false;
+	let showDetails: boolean = false;
+	let showFilters: boolean = false;
 
-	const toggleDetails = () => {
+	const toggleDetails = (): void => {
 		showDetails = !showDetails;
 	};
 
-	const toggleFilters = () => {
+	const toggleFilters = (): void => {
 		showFilters = !showFilters;
 	};
 
-	const centerOnNak = () => {
+	const centerOnNak = (): void => {
 		mapCenter.set({ lat: $selectedNakamal.gps_lat, lng: $selectedNakamal.gps_lng });
 	};
 </script>
@@ -95,7 +104,7 @@
 			<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-2">
 				{#each displayedNakamals as nakamal (nakamal._id)}
 					<div class="">
-						<Nakamal {nakamal} on:locateNak={centerOnNak} on:viewNak={toggleDetails} />
+						<NakamalCard {nakamal} on:locateNak={centerOnNak} on:viewNak={toggleDetails} />
 					</div>
 				{/each}
 			</div>
@@ -111,7 +120,7 @@
 					</p>
 					<div class="flex justify-center">
 						<div class="max-w-96">
-							<Nakamal
+							<NakamalCard
 								nakamal={$closestNak.nakamal}
 								on:locateNak={centerOnNak}
 								on:viewNak={toggleDetails}

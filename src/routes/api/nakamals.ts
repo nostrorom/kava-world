@@ -1,5 +1,5 @@
 export const GET = async () => {
-	let nakamals = [];
+	let nakamals: Nakamal[] = [];
 
 	try {
 		const res = await fetch('https://nosdev-api.herokuapp.com/kavaworld/nakamals');
