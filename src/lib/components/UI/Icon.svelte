@@ -1,16 +1,9 @@
-<script>
-	export let icon = null;
-	// export let color = null;
-	// export let colorClass = `text-${color}`;
-	// export let size = 5;
-	// let height = `h-${size}`;
-	// let width = `w-${size}`;
-	// if (size === 2) {
-	// 	height = 'h-2';
-	// }
+<script lang="ts">
+	export let icon: string;
+	export let size: string = 'h-6 w-6';
 </script>
 
-<div class="h-full w-full">
+<div class={size}>
 	{#if icon === 'kava'}
 		<svg
 			class="h-full w-full fill-current"

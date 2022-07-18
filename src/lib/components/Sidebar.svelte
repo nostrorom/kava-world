@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import Icon from '$lib/components/UI/Icon.svelte';
 </script>
@@ -10,7 +10,7 @@
 				<a href="/blog">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
-						class:text-white={$page.path === '/blog'}
+						class:text-white={$page.url.pathname === '/blog'}
 					>
 						<div class="h-6 lg:h-7 flex items-center justify-center">
 							<Icon icon="news" />
@@ -23,7 +23,7 @@
 				<a href="/">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
-						class:text-white={$page.path === '/'}
+						class:text-white={$page.url.pathname === '/'}
 					>
 						<div class="h-6 lg:h-7 flex items-center justify-center">
 							<Icon icon="lightbulb" />
@@ -36,7 +36,7 @@
 				<a href="/producers">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
-						class:text-white={$page.path === '/producers'}
+						class:text-white={$page.url.pathname === '/producers'}
 					>
 						<div class="h-6 lg:h-7 flex items-center justify-center">
 							<Icon icon="leaf" />
@@ -49,7 +49,7 @@
 				<a href="/users">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
-						class:text-white={$page.path === '/users'}
+						class:text-white={$page.url.pathname === '/users'}
 					>
 						<div class="h-6 lg:h-7 flex items-center justify-center">
 							<Icon icon="users" />
@@ -62,7 +62,7 @@
 				<a href="https://kava-store.com" target="_blank">
 					<div
 						class="uppercase text-xl font-logo font-bold py-8 grid grid-cols-1 md:grid-cols-3 hover:bg-org-700 hover:text-white"
-						class:text-white={$page.path === '/shop'}
+						class:text-white={$page.url.pathname === '/shop'}
 					>
 						<div class="h-6 lg:h-7 flex items-center justify-center">
 							<Icon icon="cart" />

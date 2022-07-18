@@ -85,11 +85,11 @@
 <div class="flex w-full h-full">
 	<section class="w-full md:w-4/5">
 		<div class="h-1/3 pb-1 relative">
-			<GoogleMap
+			<!-- <GoogleMap
 				mapDiv={'nakMap'}
 				on:toggleDetails={toggleDetails}
 				on:toggleFilters={toggleFilters}
-			/>
+			/> -->
 		</div>
 		<div class="h-2/3 space-y-2 overflow-y-auto relative">
 			<div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-1 md:gap-2">

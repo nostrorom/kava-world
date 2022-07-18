@@ -1,9 +1,9 @@
 <script>
 	import Header from '$lib/components/Header.svelte';
 	import Sidebar from '$lib/components/Sidebar.svelte';
-	import '../app.postcss';
-	import '@fontsource/poor-story';
-	import '@fontsource/mulish';
+	import '../app.css';
+	// import '@fontsource/poor-story';
+	// import '@fontsource/mulish';
 </script>
 
 <svelte:head>

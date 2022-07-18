@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Icon from '$lib/components/UI/Icon.svelte';
@@ -6,9 +6,9 @@
 
 	const dispatch = createEventDispatcher();
 
-	function toggle() {
+	const toggle = (): void => {
 		dispatch('toggle');
-	}
+	};
 </script>
 
 <div

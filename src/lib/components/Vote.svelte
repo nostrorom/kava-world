@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/UI/Button.svelte';
 	import Icon from '$lib/components/UI/Icon.svelte';
-	import Review from '$lib/components/Review.svelte';
+	import ReviewCard from '$lib/components/Review.svelte';
 	import ReviewAccordion from '$lib/components/UI/ReviewAccordion.svelte';
 	import { slide, fade } from 'svelte/transition';
 	import { user, token, isLoggedIn } from '$lib/stores/user.js';
@@ -10,13 +10,24 @@
 	import { goto } from '$app/navigation';
 
 	export let nakamal;
-	export let userReview;
-	export let userHasReviewed = false;
+	export let userReview: Review;
+	export let userHasReviewed: boolean = false;
 
 	let votingActive = false;
 	let showUserReview = false;
 
-	let review = {
+	// type Review = {
+	//   user_username: string
+	// 	user_id: string
+	// 	nakamal_id: string
+	// 	nakamal_name: string
+	// 	kava_rating: number
+	// 	nakamal_rating: number
+	// 	comment: string
+
+	// }
+
+	let review: Review = {
 		user_username: $user.username,
 		user_id: $user._id,
 		nakamal_id: nakamal._id,
@@ -111,7 +122,7 @@
 								</Button>
 							</div>
 						</button>
-						<Review review={userReview} view="author" />
+						<ReviewCard review={userReview} view="author" />
 					</div>
 				{/if}
 			</div>
