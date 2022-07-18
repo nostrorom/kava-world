@@ -69,7 +69,9 @@
 	};
 
 	const centerOnNak = (): void => {
-		mapCenter.set({ lat: $selectedNakamal.gps_lat, lng: $selectedNakamal.gps_lng });
+		$selectedNakamal
+			? mapCenter.set({ lat: $selectedNakamal.gps_lat, lng: $selectedNakamal.gps_lng })
+			: console.log('No selected nak');
 	};
 </script>
 

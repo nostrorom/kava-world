@@ -40,6 +40,8 @@ interface Review {
 
 interface Nakamal {
 	_id: string;
+	gps_lat: string;
+	gps_lng: string;
 	country: string;
 	city: string;
 	kakai: boolean;
