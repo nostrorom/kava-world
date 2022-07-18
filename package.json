@@ -1,44 +1,55 @@
 {
-    "name": "kava-world",
-    "version": "0.8.4",
-    "engines": {
-        "node": "16.x"
-    },
-    "scripts": {
-        "dev": "env-cmd svelte-kit dev",
-        "build": "svelte-kit build",
-        "start": "node build/index.js",
-        "preview": "svelte-kit preview",
-        "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
-        "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. ."
-    },
-    "devDependencies": {
-        "@sveltejs/kit": "next",
-        "autoprefixer": "^10.4.0",
-        "cssnano": "^5.0.11",
-        "env-cmd": "^10.1.0",
-        "eslint": "^8.3.0",
-        "eslint-config-prettier": "^8.3.0",
-        "eslint-plugin-svelte3": "^3.2.1",
-        "postcss": "^8.4.1",
-        "postcss-load-config": "^3.1.0",
-        "prettier": "^2.5.0",
-        "prettier-plugin-svelte": "^2.5.0",
-        "svelte": "^3.44.2",
-        "svelte-preprocess": "^4.9.8",
-        "tailwindcss": "^2.2.19"
-    },
-    "type": "module",
-    "dependencies": {
-        "@auth0/auth0-spa-js": "^1.19.2",
-        "@fontsource/mulish": "^4.5.2",
-        "@fontsource/poor-story": "^4.5.0",
-        "@googlemaps/js-api-loader": "^1.12.10",
-        "@googlemaps/markerclusterer": "^1.0.15",
-        "@lukeed/uuid": "^2.0.0",
-        "@sveltejs/adapter-node": "^1.0.0-next.55",
-        "@sveltejs/kit": "next",
-        "cookie": "^0.4.1",
-        "google-maps": "^4.3.3"
-    }
+        "name": "kava-world",
+        "version": "0.9.0",
+        "engines": {
+                "node": ">16.x"
+        },
+        "scripts": {
+                "upg": "pnpm add -g pnpm npm-check-updates",
+                "upgo": "ncu -u && pnpm i && npm run dev",
+                "dev": "vite dev",
+                "build": "vite build",
+                "package": "svelte-kit package",
+                "preview": "vite preview",
+                "prepare": "svelte-kit sync",
+                "test": "playwright test",
+                "check": "svelte-check --tsconfig ./tsconfig.json",
+                "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+                "lint": "prettier --check --plugin-search-dir=. . && eslint .",
+                "format": "prettier --write --plugin-search-dir=. ."
+        },
+        "devDependencies": {
+                "@playwright/test": "^1.23.4",
+                "@sveltejs/adapter-auto": "next",
+                "@sveltejs/kit": "next",
+                "@types/google.maps": "^3.49.2",
+                "@typescript-eslint/eslint-plugin": "^5.30.7",
+                "@typescript-eslint/parser": "^5.30.7",
+                "autoprefixer": "^10.4.7",
+                "eslint": "^8.20.0",
+                "eslint-config-prettier": "^8.5.0",
+                "eslint-plugin-svelte3": "^4.0.0",
+                "playwright": "^1.23.4",
+                "postcss": "^8.4.14",
+                "prettier": "^2.7.1",
+                "prettier-plugin-svelte": "^2.7.0",
+                "svelte": "^3.49.0",
+                "svelte-check": "^2.8.0",
+                "svelte-preprocess": "^4.10.7",
+                "tailwindcss": "^3.1.6",
+                "tslib": "^2.4.0",
+                "typescript": "^4.7.4",
+                "vite": "^3.0.2"
+        },
+        "type": "module",
+        "dependencies": {
+                "@auth0/auth0-spa-js": "^1.22.1",
+                "@fontsource/mulish": "^4.5.11",
+                "@fontsource/poor-story": "^4.5.7",
+                "@googlemaps/js-api-loader": "^1.14.3",
+                "@googlemaps/markerclusterer": "^2.0.8",
+                "@sveltejs/adapter-node": "^1.0.0-next.81",
+                "@sveltejs/kit": "next",
+                "google-maps": "^4.3.3"
+        }
 }

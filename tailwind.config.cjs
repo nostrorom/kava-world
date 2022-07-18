@@ -1,12 +1,13 @@
+/** @type {import('tailwindcss').Config} */
+
 const colors = require('tailwindcss/colors');
 
-const config = {
-	mode: "jit",
-	purge: [
-		"./src/**/*.{html,js,svelte,ts}",
-	],
+module.exports = {
+	content: ['./src/**/*.{html,js,svelte,ts}'],
+	darkMode: 'class',
 	theme: {
 		extend: {},
+
         fontFamily: {
             logo: 'Poor Story',
             main: 'Mulish',
@@ -50,5 +51,5 @@ const config = {
         },
 	},
 	plugins: [],
-};
-module.exports = config;
+}
+
