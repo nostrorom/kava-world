@@ -1,9 +1,6 @@
 {
     "name": "kava-world",
     "version": "0.8.4",
-    "engines": {
-        "node": "16.x"
-    },
     "scripts": {
         "dev": "env-cmd svelte-kit dev",
         "build": "svelte-kit build",
